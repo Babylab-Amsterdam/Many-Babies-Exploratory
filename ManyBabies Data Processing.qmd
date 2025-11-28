@@ -2,6 +2,10 @@
 title: "ManyBabies Data Processing"
 format: html
 editor: visual
+format:
+  html:
+    theme: cosmo
+    toc: true
 ---
 
 # Project Overview
