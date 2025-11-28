@@ -1,0 +1,725 @@
+---
+title: "ManyBabies Data Processing"
+format: html
+editor: visual
+---
+
+# Project Overview
+
+**Project start date**: 2025-09-19 Project end date: 2025-12-
+
+**Contributors**: David Osten, Saulė Remeikaitė
+
+**Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com
+
+**Project aims**: Finding communalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.
+
+**Project objectives**: Combining and standardizing MB1, MB3, MB4 datasets into one for easier further exploration Producing clear process and data documentation
+
+**Studies:**\
+MB1 https://manybabies.org/MB1/\
+MB3 https://manybabies.org/MB3/\
+MB4 https://manybabies.org/MB4/
+
+**Datafiles retrieved from OSF:**\
+MB1: 02_validated_output.csv\
+MB3: 02_validated_merged_output.csv\
+MB4: \_clean_data.csv
+
+# Comparing the variables in each dataset
+
+The first step was to compare the three original datasets to determine (1) which variables they share and (2) which variables are relevant for our analysis. All variables that fulfill both criteria are shown in the table below.
+
+Several variables present in the original datasets do not appear in the table below because they were excluded for one of two reasons:\
+(1) they are not available in all three datasets, or\
+(2) they were considered irrelevant for our purposes (e.g., `research assistant`)
+
+A small number of variables that were not available in all three datasets were still retained because we may obtain this information later. These include household size (data not available in MB4), participant place of birth (data not available in MB1 and MB4), race (data not available in MB4), and parental education (data not available in MB4).
+
+Some variables do not exist in any of the original datasets at all, yet they are essential for merging the datasets later and can be created easily:\
+a. **Project identifier.** This variable is absent in the original datasets but crucial for merging. We therefore created a variable `project_identifier` with values “MB1”, “MB3”, or “MB4.”\
+b. **Unique subject identifier.** This also does not exist in the original files but is necessary for merging. We created a variable `unique_subject_identifier` by concatenating project ID + lab ID + participant ID.
+
+Other variables do not exist in all datasets in the same form but can be derived from variables that are already available:\
+a. **Household size.** MB1 contains `household_size`, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: `num_adults_household` and `num_children_household`.\
+b. **Age group.** MB1 includes `age_group`, but this variable is missing in MB3 and MB4. In these datasets, age group can be derived from the available age-in-days variables (MB3: `participant_age_days`, MB4: `age_days`).\
+c. **Language group.** MB1 contains `language_group` (monolingual vs. bilingual), but the other datasets do not. In MB3 and MB4, the variable can be created using primary language exposure (MB3: `lang1_exposure`, MB4: `percent_primarylanguage`).
+
+The table below lists all variables that we will use moving forward, whether they are present in all datasets, judged relevant for analysis, can be created from existing information, or are currently absent but expected to be added later. The leftmost column shows the standardized variable name that we will apply across all datasets to ensure consistency.
+
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+|                                    | **Variable name in MB1**                                                                    | **Variable name in MB3**                                                                    | **Variable name in MB4**                                                                    |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Project Identifier: project_id** | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Lab Identifier:\                 | lab                                                                                         | lab_id                                                                                      | lab_id                                                                                      |
+| lab_id**                           |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Unique Subject Identifier:\      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
+| unique_subject_identifier**        |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Method:\                         | method                                                                                      | method                                                                                      | method                                                                                      |
+| method**                           |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Age:\                            | age_days                                                                                    | participant_age_days                                                                        | age_days                                                                                    |
+| age_days**                         |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Age Group:\                      | age_group                                                                                   | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
+| age_group**                        |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Participant Sex:\                | gender                                                                                      | participant_sex                                                                             | participant_gender                                                                          |
+| participant_sex**                  |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Stimulus type:\                  | *\[variable doesn't exist but can easily be created. Value will be "audiovisual" for all\]* | *\[variable doesn't exist but can easily be created. Value will be "audiovisual" for all\]* | *\[variable doesn't exist but can easily be created. Value will be "audiovisual" for all\]* |
+| stimulus_type**                    |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Trial Number:\                   | trial_num                                                                                   | trial_num                                                                                   | trial_number                                                                                |
+| trial_number**                     |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Trial Type:\                     | trial_type                                                                                  | trial_type                                                                                  | condition                                                                                   |
+| trial_type**                       |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Looking Time:\                   | looking_time                                                                                | looking_time_seconds                                                                        | lookingtime_videoevent                                                                      |
+| looking_time**                     |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+|                                    |                                                                                             |                                                                                             | lookingtime_freezeframe                                                                     |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Household Size:\                 | household_size                                                                              | *\[variable doesn't exist but can easily be created based on other data\]*                  | *\[variable doesn't exist and CANNOT be created because no data is available\]*             |
+| household_size**                   |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Participant Place of Birth:\     | *\[variable doesn't exist and CANNOT be created because no data is available\]*             | participant_place_of_birth                                                                  | *\[variable doesn't exist and CANNOT be created because no data is available\]*             |
+| participant_place_of_birth**       |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Education of first parent:\      | parenta_education                                                                           | caregiver1_education_construct_response                                                     | *\[variable doesn't exist and CANNOT be created because no data is available\]*             |
+| parent1_education**                |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Education of second parent:\     | parentb_education                                                                           | caregiver2_education_construct_response                                                     | *\[variable doesn't exist and CANNOT be created because no data is available\]*             |
+| parent2_education**                |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Second session:\                 | second_session                                                                              | second_session                                                                              | second_session                                                                              |
+| second_session**                   |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Primary Caregiver Gender:\       | parenta_gender                                                                              | caregiver1_gender                                                                           | primarycaregiver_gender                                                                     |
+| primarycaregiver_gender**          |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Language group:\                 | lang_group                                                                                  | *\[variable doesn't exist but can easily be created based on other data\]*                  | *\[variable doesn't exist but can easily be created based on other data\]*                  |
+| language_group**                   |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Primary Language:\               | lang_group                                                                                  | lang1_name                                                                                  | primary_language                                                                            |
+| primary_language**                 |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Primary Language Exposure:\      | lang1_exposure                                                                              | lang1_exposure                                                                              | percent_primarylanguage                                                                     |
+| primary_language_exposure**        |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Position of Baby:\               | caregiver_seat                                                                              | caregiver_seat                                                                              | caregiver_seat                                                                              |
+| caregiver_seat**                   |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Race**                           | race_ethnicity                                                                              | race_construct_response                                                                     | *\[variable doesn't exist and CANNOT be created because no data is available\]*             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+
+# Data Processing Overview
+
+The end product should be a single .csv file that contains the looking time data and other relevant variables of all three datasets.
+
+For this, we follow a systematic pipeline:\
+**I. Preparation**: Creating identifiers and reshaping data structures (long vs. wide) so that datasets are compatible.\
+**II. Exclusion**: Filtering out participants based on determined exclusion criteria\
+**III. Harmonization**: Renaming variables to a master standard, calculating derived variables (e.g. household size and language group), and ensuring all datasets share the exact same column structure. And lastly, standardizing the values that variables can take across all three datasets.\
+**IV. Merging**: Combining the harmonized datasets into one master file.\
+**V. Cleaning Empty Values**\
+**VI. Export**
+
+# Loading tidyverse
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+# Loading the data
+
+We load the raw datasets for MB1, MB3, and MB4. These files are located in the `Original Data Files/` subdirectory. Now we have three dataframes, called MB1, MB3, MB4.
+
+```{r}
+library(readr)
+MB1 <- read_csv("Original Data Files/MB1_02_validated_output.csv")
+MB3 <- read_csv("Original Data Files/MB3_02_validated_merged_output.csv")
+MB4 <- read_csv("Original Data Files/MB4_clean_data.csv")
+```
+
+# I. Basic Preparation of Each Dataframe
+
+### Create Project Identifier Variable as the first column of each Dataframe
+
+First things first, we must tag each row with its source study. We create a `project_id` column and move it to the first position. This allows us to know which study each trial is from even after merging.
+
+```{r}
+MB1 <- MB1 %>%
+  mutate(project_id = "MB1") %>%
+  relocate(project_id)
+
+MB3 <- MB3 %>%
+  mutate(project_id = "MB3") %>%
+  relocate(project_id)
+
+MB4 <- MB4 %>%
+  mutate(project_id = "MB4") %>%
+  relocate(project_id)
+```
+
+### Create a Unique Subject Identifier in each Dataframe
+
+Subject IDs are not unique across projects. To ensure every row has a globally unique identifier, we construct a composite key: project id + lab id + participant id. This prevents ID collisions when the data is merged. The names of the lab id and participant id variables are slightly different in each dataframe, which is why the code isn't identical for each dataframe.
+
+```{r}
+# MB1 Processing
+MB1 <- MB1 %>%
+  mutate(unique_subject_identifier = paste(project_id, lab, subid, sep = "_")) %>%
+  relocate(unique_subject_identifier, .after = project_id)
+
+# MB3 Processing
+MB3 <- MB3 %>%
+  mutate(unique_subject_identifier = paste(project_id, lab_id, participant_id, sep = "_")) %>%
+  relocate(unique_subject_identifier, .after = project_id)
+
+# MB4 Processing
+MB4 <- MB4 %>%
+  mutate(unique_subject_identifier = paste(project_id, lab_id, subj_id, sep = "_")) %>%
+  relocate(unique_subject_identifier, .after = project_id)
+```
+
+### Convert MB4 from a wide to a long format
+
+MB1 and MB3 are already in "long" format (one row per trial). However, MB4 is in "wide" format (one row per participant, with trials as columns like `trial1_lookingtime`, `trial2_lookingtime`, etc.).
+
+To align MB4 with the others, we perform a "pivot longer" operation:
+
+1.  We identify columns starting with `trial` followed by a number.
+
+2.  We use a regular expression (`names_pattern`) to extract the **trial number** and the **metric name** (e.g., `lookingtime`) from the column headers.
+
+3.  We reshape the data so that each trial becomes a specific row.
+
+4.  Lastly, we remove "trailing" empty trials (trials that did not happen): The original wide-format CSV file has a fixed number of columns, up to trial 14, for every participant. However, this is only the maximum number of trials. Many infants finish the experiment before reaching trial 14. The consequence: When we pivot this data, R creates a row for every column found in the file. A participant who stopped after Trial 7 will therefore have 7 rows of real data followed by 7 rows of NAs (representing trials that never happened). We filter the data to remove these "structural" NAs at the end, while carefully preserving "intermittent" NAs (e.g., if Trial 3 is missing but Trial 4 exists, we keep Trial 3).
+
+```{r}
+MB4_long <- MB4 %>%
+  pivot_longer(
+    # Select all columns that look like "trial" followed by a number and underscore
+    cols = matches("^trial\\d+_"),
+    
+    # "trial_number" gets the numbers
+    # ".value" tells R to use the remaining text as the new column names
+    names_to = c("trial_number", ".value"),
+    
+    # The regex that defines how to split the column names
+    names_pattern = "trial(\\d+)_(.*)",
+    
+    # Automatically convert the extracted trial number to an integer
+    names_transform = list(trial_number = as.integer)
+  ) %>%
+  # Reorder columns to match your Python output preference
+  relocate(
+    project_id,
+    unique_subject_identifier,
+    trial_number,
+    sawcriticalevent,
+    lookingtime_videoevent,
+    lookingtime_freezeframe,
+    numrepeats,
+    .after = last_col() 
+  ) %>%
+  relocate(project_id, unique_subject_identifier) %>%
+  
+  # --- Trim Trailing NAs ---
+  group_by(unique_subject_identifier) %>%
+  # Filter: Keep trials that are <= the last trial containing real data.
+  # We use `c(..., 0)` to handle cases where a participant might have ALL NAs safely.
+  filter(trial_number <= max(c(trial_number[!is.na(lookingtime_videoevent)], 0))) %>%
+  ungroup()
+```
+
+# II. Excluding participants from each DataFrame
+
+Although the original datasets contain summary binary variables indicating whether a participant was excluded (e.g., `session_inclusion`: include/exclude), we did not rely on these. Instead, we re-evaluated eligibility based on granular exclusion criteria. This allowed us to modify the inclusion logic: unlike the original studies, we retained participants who were previously excluded solely due to age or language background. However, we strictly enforced exclusions related to data validity, removing participants or trials flagged for technical errors, developmental disorders, or fussiness.
+
+### Excluding participants from MB1
+
+MB1 has `session_error` (true/false) and `trial_error` (true/false) as summary variables for exclusion in their original data file. However, we did not rely on these. Instead, we looked more closely at `session_error_type` and `trial_error_type`. We ended up excluding all `trial_error_type` values except those that indicate language-based exclusion, age-based exclusion, or NA and empty values (indicating no error). We ended up excluding all `session_error_type` values except those that indicate language-based exclusion, age-based exclusion, or NA and empty values.
+
+The new dataframe is called MB1_excluded.
+
+```{r}
+# --- 1. Define KEEP values for trial_error_type ---
+trial_keep_values <- c(
+  "bilingual",
+  "NA",
+  "nan",
+  "N/A",
+  "No error",
+  "" # Includes blank/empty strings
+)
+
+# --- 2. Define KEEP values for session_error_type ---
+session_keep_values <- c(
+  "age exclusion",
+  "age exclusion; pilot",
+  "age exclusion: Record indicated infant was born 10 days earlier than his actual DOB",
+  "bilingual",
+  "Born 25 days early",
+  "child is bilingual",
+  "child is too old for the study",
+  "child too old",
+  "Does not meet language criteria",
+  "tested when too old",
+  "Language Criteria",
+  "language exclusion",
+  "language exclusion; pilot",
+  "language exclusion: Mom said she 90% English, but after hours/week calculation it was only 83.8%",
+  "language exclusion: Mom said she speaks English and Spanish only, but she also speaks Belizean Creole to the baby",
+  "language exclusion: Parent said 20% Italian, but after hours/week calculation it was only 2%",
+  "language exclusion: Parent said 70% Armenian, but after hours/week calculation it was 98%",
+  "language exclusion: Parent said less than 10% Farsi, but after hours/week calculation it was 16.2",
+  "language exclusion: Parent said no more than 10% Spanish, but after hours/week calculation it was 18.2%",
+  "Languaje exclusion", # Typos are intentional
+  "N/A",
+  "NA",
+  ""
+)
+
+# --- 3. Apply the Filter ---
+MB1_excluded <- MB1 %>%
+  filter(
+    # Check trial_error_type (converting real NAs to "" to match the list)
+    replace_na(trial_error_type, "") %in% trial_keep_values,
+    
+    # Check session_error_type (converting real NAs to "" to match the list)
+    replace_na(session_error_type, "") %in% session_keep_values
+  )
+```
+
+### Excluding participants from MB3
+
+MB3 has trial_error (error/no_error) and `session_inclusion` (include/exclude) as a summary variables for exclusion in their original data file. However, we did not rely on them. Instead, we looked more closely at the specific trial_error_info, session_exclusion_reason_1, session_exclusion_reason_2, session_exclusion_reason_3, session_exclusion_reason_4 variables. We ended up excluding all `trial_error_info` values except "no_error" or NA and empty values. We ended up excluding all session exclusion values except those that indicate age-based exclusion (specifically "outside_age_range") or NA and empty values (indicating no error).
+
+The new dataframe is called MB3_excluded.
+
+```{r}
+# Define the keep values for the trial error info
+mb3_keep_values_trial <- c("NA", "no_error", "")
+
+# Define the keep values for session reason 1
+mb3_keep_values_sess1 <- c("NA", "outside_age_range", "")
+
+MB3_excluded <- MB3 %>%
+  filter(
+    # 1. Trial Error Info: fill NA with "" to match Python logic, then check list
+    replace_na(trial_error_info, "") %in% mb3_keep_values_trial,
+    
+    # 2. Session Reason 1: fill NA with "NA", then check list
+    replace_na(session_exclusion_reason_1, "NA") %in% mb3_keep_values_sess1,
+    
+    # 3. Session Reasons 2-4: fill NA with "NA", must equal "NA"
+    replace_na(session_exclusion_reason_2, "NA") == "NA",
+    replace_na(session_exclusion_reason_3, "NA") == "NA",
+    replace_na(session_exclusion_reason_4, "NA") == "NA"
+  )
+```
+
+### Excluding participants from MB4_long
+
+MB4 has **`exclude_session`** (containing "excluded" or "NA") as a summary variable for exclusion. However, we did not rely on this. Instead, we looked more closely at the four columns `exclusion_type_1` through `exclusion_type_4`. We excluded participants based on all recorded error types, with one specific exception: we retained participants marked with **"FailToMakeChoice"**. Since this error relates to the test phase that occurs *after* the habituation phase, it does not impact the validity of the habituation looking time data we are analyzing. Participants with no recorded errors ("NA") were also retained.
+
+The new dataframe is called MB4_long_excluded.
+
+```{r}
+# Define the list of strings that trigger exclusion
+exclusion_criteria <- c(
+  "DevDisorder",
+  "EquipmentError",
+  "ExperimenterError",
+  "FailToSetHabCrit",
+  "FailToViewCritPeriod",
+  "FussOut",
+  "OutsideInterference",
+  "Preterm"
+)
+
+# Combine them into one regex pattern: "DevDisorder|EquipmentError|..."
+exclusion_pattern <- paste(exclusion_criteria, collapse = "|")
+
+# Apply the filter
+MB4_long_excluded <- MB4_long %>%
+  filter(
+    !if_any(
+      c(exclusion_type_1, exclusion_type_2, exclusion_type_3, exclusion_type_4),
+      ~ str_detect(replace_na(., ""), exclusion_pattern)
+    )
+  )
+```
+
+# III. Harmonization
+
+This is the most complex step. We transform each filtered dataframe (`_excluded`) into a standardized format (`_short` version), which only contains the relevant and shared variables in the table shown at the beginning of this document.
+
+### Harmonization Step 1: Define Master Column List
+
+We define a `CORE_COLUMNS` list representing the final variables we want to keep. We also define `FINAL_MB4_COLUMNS` to include MB4-specific backup looking time variables.
+
+```{r}
+# A. CORE columns that MUST be in all three dataframes
+CORE_COLUMNS <- c(
+  "project_id",
+  "lab_id",
+  "unique_subject_identifier",
+  "method",
+  "age_days",
+  "age_group_new",
+  "participant_sex",
+  "stimulus_type",
+  "trial_type",
+  "trial_number",
+  "looking_time",
+  "household_size",
+  "parent1_education",
+  "parent2_education",
+  "participant_place_of_birth",
+  "race",
+  "primarycaregiver_gender",
+  "language_group",
+  "primary_language",
+  "primary_language_exposure",
+  "caregiver_seat",
+  "second_session"
+)
+
+# B. MB4-Specific columns (Backup Looking Times)
+MB4_BACKUP_COLUMNS <- c(
+  "lookingtime_videoevent_backup",
+  "lookingtime_freezeframe_backup"
+)
+
+# The full column set for MB4_short
+FINAL_MB4_COLUMNS <- c(CORE_COLUMNS, MB4_BACKUP_COLUMNS)
+```
+
+### Harmonization Step 2: Define Age Bins and Labels globally
+
+For the later calculation of the age_group variable (which does not exist in MB3 and MB4), we define age bins globally.
+
+```{r}
+age_bins <- c(90, 182, 273, 364, 455, 546, 637)
+age_labels <- c(
+  "3–6 months", "6–9 months", "9–12 months",
+  "12–15 months", "15–18 months", "18–21 months"
+)
+```
+
+### Harmonization Step 3: Process MB1
+
+The harmonization of MB1 began by renaming existing variables to align with our standardized master list.
+
+Following this, we calculated derived variables, which in MB1s case only meant calculating the age_group variable. The original MB1 dataset actually included an `age_group` variable, but it contained missing values. This was not a problem, however, as we still had the age_days variable. To resolve these gaps and ensure consistency across all three projects, we created a new variable, `age_group_new`. We applied the original MB1 binning structure (3–6, 6–9, 9–12, and 12–15 months) but extended it to include 15–18 and 18–21 month intervals. This extension allows us to accommodate the older participant ranges present in the other two studies within a single, unified schema. Then, we calculated in which age bin each participant falls in based on the age_days variable.
+
+Finally, we standardized specific variable values. This meant correcting spelling errors (e.g., fixing "monolinugal" to "monolingual") and mapping the various free-text descriptions of the baby's position (e.g., "high chair", "ceregiver", "seat/caregiver") into three standardized categories: `caregiver_lap_only`, `seat_alone_only`, or `changed_throughout`. These categories would then also be applied to the other two studies.
+
+```{r}
+MB1_short <- MB1_excluded %>%
+  # --- 1. Rename existing columns ---
+  rename(
+    lab_id = lab,
+    participant_sex = gender,
+    parent1_education = parenta_education,
+    parent2_education = parentb_education,
+    trial_number = trial_num,
+    language_group = lang_group,
+    primary_language = lang1,
+    primary_language_exposure = lang1_exposure,
+    primarycaregiver_gender = parenta_gender,
+    race = race_ethnicity
+  ) %>%
+  
+  # --- 2. Create, Calculate, and Clean Columns ---
+  mutate(
+    # Create static columns
+    stimulus_type = "audiovisual",
+    
+    # Age Binning (similar to pd.cut)
+    age_group_new = cut(age_days, breaks = age_bins, labels = age_labels),
+    
+    # Fix spelling in language_group
+    language_group = str_replace(language_group, "monolinugal", "monolingual"),
+    
+    # Standardize caregiver_seat using case_match
+    # This replaces the long dictionary from Python
+    caregiver_seat = case_match(
+      caregiver_seat,
+      c("caregiver", "ceregiver", "Caregiver", "Caregivers lap",
+        "caregiver (started with chair but moved before trials started)") ~ "caregiver_lap_only",
+      "seat/caregiver" ~ "changed_throughout",
+      c("high chair", "Seat", "seat") ~ "seat_alone_only",
+      .default = caregiver_seat # Keep original if no match
+    ),
+    
+    # Handle NA/Empty strings for seat
+    caregiver_seat = if_else(is.na(caregiver_seat) | caregiver_seat == "", "NA", caregiver_seat)
+  ) %>%
+  
+  # --- 3. Ensure all CORE columns exist (The Reindex Step) ---
+  # This finds which CORE columns are missing and adds them as NA
+  bind_cols(
+    map_dfc(setdiff(CORE_COLUMNS, names(.)), ~ tibble(!!.x := NA))
+  ) %>%
+  
+  # --- 4. Final Selection and Reordering ---
+  select(all_of(CORE_COLUMNS))
+```
+
+### Harmonization Step 4: Process MB3
+
+The harmonization of MB3 followed a similar workflow, beginning with the renaming of variables to match our master list.
+
+Following this, we calculated several derived variables that were not explicitly present in the raw data. First, unlike MB1 which provided a total household count, MB3 required us to calculate this metric. We derived `household_size` by summing the `num_adults_household` and `num_children_household`, plus one to include the participant.
+
+Second, unlike MB1 which provided a language_group variable, we had to derive `language_group` in MB3 based on the recorded percentage of primary language exposure. MB1 mostly classified monolingual participants as participants having a primary language exposure of between 90 - 100 percent (however, there were also some outliers who had 70 percent primary language exposure and were still classified as monolingual). Still, we decided to use 90% as the cutoff for monolingual to bilingual. However, the MB3 data presented a unique distribution: many participants listed a 'primary' language with exposure rates below 50%, with some even lower than 30%. Since an exposure rate this low typically contradicts the definition of a 'primary' language, we adjusted our classification thresholds to capture this variance. Consequently, participants with exposure between 10% and 90% were classified as 'bilingual,' while those falling outside this range were labeled 'monolingual.'
+
+We also applied the same extended age binning logic used for MB1 to create `age_group_new`.
+
+Finally, we standardized categorical variables. This involved normalizing gender and sex inputs (converting "female"/"male" to "F"/"M"), aligning experimental method descriptions (e.g., mapping "singlescreen_cf" to "singlescreen"), and converting the `second_session` variable into a uniform Boolean string format.
+
+```{r}
+# --- 1. Rename and Mutate (Standardizing values) ---
+MB3_short <- MB3_excluded %>%
+  rename(
+    age_days = participant_age_days,
+    looking_time = looking_time_seconds,
+    parent1_education = caregiver1_education_construct_response,
+    parent2_education = caregiver2_education_construct_response,
+    primarycaregiver_gender = caregiver1_gender,
+    primary_language = lang1_name,
+    primary_language_exposure = lang1_exposure,
+    race = race_construct_response,
+    trial_number = trial_num
+  ) %>%
+  mutate(
+    stimulus_type = "audiovisual",
+    
+    # Calculate Household Size (Adults + Children + Participant)
+    household_size = as.numeric(num_adults_household) + 
+                     as.numeric(num_children_household) + 1,
+    
+    # Age Binning
+    age_group_new = cut(age_days, breaks = age_bins, labels = age_labels),
+    
+    # Language Group Logic
+    language_group = if_else(
+      between(primary_language_exposure, 10, 90), 
+      "bilingual", 
+      "monolingual"
+    ),
+    
+    # Standardize Gender
+    primarycaregiver_gender = case_match(
+      primarycaregiver_gender,
+      "female" ~ "F",
+      "male" ~ "M",
+      "another_response" ~ "other",
+      .default = primarycaregiver_gender
+    ),
+    
+    participant_sex = case_match(
+      participant_sex,
+      "female" ~ "F",
+      "male" ~ "M",
+      .default = participant_sex
+    ),
+    
+    # Standardize Method
+    method = case_match(
+      method,
+      "singlescreen_cf" ~ "singlescreen",
+      "singlescreen_eyetracker" ~ "eyetracking",
+      "HPP" ~ "hpp",
+      .default = method
+    ),
+    
+    # Standardize Second Session
+    second_session = case_match(
+      second_session,
+      c("NA", "no") ~ "False",
+      c("yes", "Yes") ~ "True",
+      .default = "False"
+    ),
+    
+    # Standardize Caregiver Seat
+    caregiver_seat = case_match(
+      caregiver_seat,
+      c("caregicer", "caregive", "caregiver") ~ "caregiver_lap_only",
+      c("seat", "chair") ~ "seat_alone_only",
+      .default = caregiver_seat
+    ),
+    caregiver_seat = if_else(is.na(caregiver_seat) | caregiver_seat == "", "NA", caregiver_seat)
+  )
+
+# --- 2. Add Missing CORE Columns (The "Reindex" Step) ---
+# Identify which CORE columns are currently missing from MB3_short
+missing_cols <- setdiff(CORE_COLUMNS, names(MB3_short))
+
+# Assign them as NA
+MB3_short[missing_cols] <- NA
+
+# --- 3. Final Selection ---
+MB3_short <- MB3_short %>%
+  select(all_of(CORE_COLUMNS))
+```
+
+### Harmonization Step 5: Process MB4
+
+The harmonization of MB4 involved transforming the `MB4_long_excluded` dataset into the standardized `MB4_short` format.
+
+A unique step for this dataset was the preservation of specific looking time metrics. In contrast to MB1 and MB3, MB4 had two looking time variables: `lookingtime_videoevent` (looking time while the video was played) and `lookingtime_freezeframe` (looking time after the video ended, with the last frame remaining frozen on the screen).
+
+We renamed the original variables to serve as 'backup' columns (`lookingtime_videoevent_backup` and `lookingtime_freezeframe_backup`) and established the primary `looking_time` variable using `lookingtime_videoevent`.
+
+For `age_group_new`, we applied the same extended age binning logic used in the previous steps.
+
+For language classification, we utilized the `primary_language_exposure` variable. Consistent with the logic described in MB3, we classified participants with exposure between 10% and 90% as "bilingual" and those outside this range as "monolingual."
+
+Standardization of variable values involved mapping text values to our master schema (e.g., converting "eye_tracking" to "eyetracking" and "Y"/"N" session flags to "True"/"False"). Finally, since MB4 lacked several demographic variables present in the other studies (such as `household_size` and `race`), we programmatically identified these missing columns from our target list and filled them with `NA` values to ensure the dataset could be successfully merged.
+
+```{r}
+# --- 1. Rename and Mutate ---
+MB4_short <- MB4_long_excluded %>%
+  rename(
+    participant_sex = participant_gender,
+    trial_type = condition,
+    primary_language_exposure = percent_primarylanguage,
+    
+    # Rename original metric columns to be the backup columns
+    lookingtime_videoevent_backup = lookingtime_videoevent,
+    lookingtime_freezeframe_backup = lookingtime_freezeframe
+  ) %>%
+  mutate(
+    # Create looking_time from the backup
+    looking_time = lookingtime_videoevent_backup,
+    
+    # Static values
+    stimulus_type = "audiovisual",
+    
+    # Age Binning
+    age_group_new = cut(age_days, breaks = age_bins, labels = age_labels),
+    
+    # Standardize Gender
+    primarycaregiver_gender = case_match(
+      primarycaregiver_gender,
+      "female" ~ "F",
+      "male" ~ "M",
+      .default = primarycaregiver_gender
+    ),
+    participant_sex = case_match(
+      participant_sex,
+      "female" ~ "F",
+      "male" ~ "M",
+      .default = participant_sex
+    ),
+    
+    # Standardize Method
+    method = case_match(
+      method,
+      "eye_tracking" ~ "eyetracking",
+      "single screen" ~ "singlescreen",
+      .default = method
+    ),
+    
+    # Standardize Second Session
+    second_session = case_match(
+      second_session,
+      "N" ~ "False",
+      "Y" ~ "True",
+      .default = second_session
+    ),
+    
+    # Standardize Caregiver Seat
+    caregiver_seat = case_match(
+      caregiver_seat,
+      "caregiver" ~ "caregiver_lap_only",
+      "seat" ~ "seat_alone_only",
+      "seat_caregiver" ~ "changed_throughout",
+      .default = caregiver_seat
+    ),
+    caregiver_seat = if_else(is.na(caregiver_seat) | caregiver_seat == "", "NA", caregiver_seat),
+    
+    # Language Group Logic
+    language_group = if_else(
+      between(primary_language_exposure, 10, 90), 
+      "bilingual", 
+      "monolingual"
+    )
+  )
+
+# --- 2. Add Missing Columns (using FINAL_MB4_COLUMNS list) ---
+# Identify which columns from the target list are missing
+missing_cols_mb4 <- setdiff(FINAL_MB4_COLUMNS, names(MB4_short))
+
+# Assign them as NA
+MB4_short[missing_cols_mb4] <- NA
+
+# --- 3. Final Selection ---
+MB4_short <- MB4_short %>%
+  select(all_of(FINAL_MB4_COLUMNS))
+```
+
+# IV. Merging Data into one Dataframe
+
+Before merging, we must ensure strict type consistency. Some datasets might store `education` or `second_session` as numbers or Booleans, while others store them as text. To prevent merge errors, we explicitly force these problematic columns to the `character` (text) data type across all three datasets before binding them together.
+
+```{r}
+# Define columns with potential type mismatches
+# Added "second_session" to the list
+cols_to_fix <- c(
+  "parent1_education", 
+  "parent2_education", 
+  "race", 
+  "participant_place_of_birth", 
+  "second_session"
+)
+
+# Apply the fix using across() and any_of()
+MB1_short <- MB1_short %>% mutate(across(any_of(cols_to_fix), as.character))
+MB3_short <- MB3_short %>% mutate(across(any_of(cols_to_fix), as.character))
+MB4_short <- MB4_short %>% mutate(across(any_of(cols_to_fix), as.character))
+
+# NOW we can merge safely
+manybabies_merged <- bind_rows(MB1_short, MB3_short, MB4_short)
+```
+
+# V. Cleaning Empty Values
+
+After merging, we perform a final cleanup.
+
+1.  We convert all factors to plain text to make future analysis easier.
+
+2.  We scan for empty strings (`""`) or strings containing only whitespace (`" "`) and convert them to true R `NA` values. This ensures accurate missing data analysis.
+
+```{r}
+manybabies_merged <- manybabies_merged %>%
+  # 1. Convert categorical factors (like age_group_new) to plain text characters
+  mutate(across(where(is.factor), as.character)) %>%
+  
+  # 2. Handle whitespace: logical check for empty strings
+  # If a character column contains only spaces or is empty, make it a real NA
+  mutate(across(where(is.character), ~ na_if(str_trim(.), "")))
+```
+
+# VI. Export
+
+Finally, we save the merged dataset. We specify `na = "NA"` to explicitly write the string "NA" into empty cells in the CSV.
+
+```{r}
+# We use the 'na = "NA"' argument to ensure the CSV looks exactly 
+# like the Python output (with "NA" written in empty cells), 
+# but your R dataframe stays clean and numeric!
+write_csv(manybabies_merged, "manybabies_merged_final.csv", na = "NA")
+```
