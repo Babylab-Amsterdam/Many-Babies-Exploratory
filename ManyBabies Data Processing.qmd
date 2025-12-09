@@ -42,7 +42,8 @@ A small number of variables that were not available in all three datasets were s
 
 Some variables do not exist in any of the original datasets at all, yet they are essential for merging the datasets later and can be created easily:\
 a. **Project identifier.** This variable is absent in the original datasets but crucial for merging. We therefore created a variable `project_identifier` with values “MB1”, “MB3”, or “MB4.”\
-b. **Unique subject identifier.** This also does not exist in the original files but is necessary for merging. We created a variable `unique_subject_identifier` by concatenating project ID + lab ID + participant ID.
+b. **Unique subject identifier.** This also does not exist in the original files but is necessary for merging. We created a variable `unique_subject_identifier` by concatenating project ID + lab ID + participant ID.\
+c. **Habituation**. This true/false variable can be easily created based on the type of trial. Familarization and training trials will have Habituation=false, while experimental conditions have Habituation=true.
 
 Other variables do not exist in all datasets in the same form but can be derived from variables that are already available:\
 a. **Household size.** MB1 contains `household_size`, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: `num_adults_household` and `num_children_household`.\
@@ -82,6 +83,9 @@ The table below lists all variables that we will use moving forward, whether the
 +------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
 | **Trial Type:\                     | trial_type                                                                                  | trial_type                                                                                  | condition                                                                                   |
 | trial_type**                       |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Habituation:\                    | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
+| habituation**                      |                                                                                             |                                                                                             |                                                                                             |
 +------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
 | **Looking Time:\                   | looking_time                                                                                | looking_time_seconds                                                                        | lookingtime_videoevent                                                                      |
 | looking_time**                     |                                                                                             |                                                                                             |                                                                                             |
@@ -300,7 +304,8 @@ MB1_excluded <- MB1 %>%
     replace_na(trial_error_type, "") %in% trial_keep_values,
     
     # Check session_error_type (converting real NAs to "" to match the list)
-    replace_na(session_error_type, "") %in% session_keep_values
+    replace_na(session_error_type, "") %in% session_keep_values,
+    
   )
 ```
 
@@ -385,6 +390,7 @@ CORE_COLUMNS <- c(
   "stimulus_type",
   "trial_type",
   "trial_number",
+  "habituation",
   "looking_time",
   "household_size",
   "parent1_education",
@@ -429,6 +435,8 @@ Following this, we calculated derived variables, which in MB1s case only meant c
 
 Finally, we standardized specific variable values. This meant correcting spelling errors (e.g., fixing "monolinugal" to "monolingual") and mapping the various free-text descriptions of the baby's position (e.g., "high chair", "ceregiver", "seat/caregiver") into three standardized categories: `caregiver_lap_only`, `seat_alone_only`, or `changed_throughout`. These categories would then also be applied to the other two studies.
 
+The variable `habituation` is filled with true or false based on `trial_type`. If `trial_type` is IDS, ADS, `habituation` = True. If not (TRAIN), false.
+
 ```{r}
 MB1_short <- MB1_excluded %>%
   # --- 1. Rename existing columns ---
@@ -449,6 +457,9 @@ MB1_short <- MB1_excluded %>%
   mutate(
     # Create static columns
     stimulus_type = "audiovisual",
+    
+    # --- Habituation Logic for MB1 ---
+    habituation = if_else(trial_type %in% c("IDS", "ADS"), TRUE, FALSE),
     
     # Age Binning (similar to pd.cut)
     age_group_new = cut(age_days, breaks = age_bins, labels = age_labels),
@@ -493,6 +504,8 @@ We also applied the same extended age binning logic used for MB1 to create `age_
 
 Finally, we standardized categorical variables. This involved normalizing gender and sex inputs (converting "female"/"male" to "F"/"M"), aligning experimental method descriptions (e.g., mapping "singlescreen_cf" to "singlescreen"), and converting the `second_session` variable into a uniform Boolean string format.
 
+The variable `habituation` is filled with true or false based on `trial_type`. If `trial_type` is consistent, inconsistent, `habituation` = True. If not (fam), false.
+
 ```{r}
 # --- 1. Rename and Mutate (Standardizing values) ---
 MB3_short <- MB3_excluded %>%
@@ -509,6 +522,9 @@ MB3_short <- MB3_excluded %>%
   ) %>%
   mutate(
     stimulus_type = "audiovisual",
+    
+    # --- Habituation Logic for MB3 ---
+    habituation = if_else(trial_type %in% c("consistent", "inconsistent"), TRUE, FALSE),
     
     # Calculate Household Size (Adults + Children + Participant)
     household_size = as.numeric(num_adults_household) + 
@@ -593,6 +609,8 @@ For language classification, we utilized the `primary_language_exposure` variabl
 
 Standardization of variable values involved mapping text values to our master schema (e.g., converting "eye_tracking" to "eyetracking" and "Y"/"N" session flags to "True"/"False"). Finally, since MB4 lacked several demographic variables present in the other studies (such as `household_size` and `race`), we programmatically identified these missing columns from our target list and filled them with `NA` values to ensure the dataset could be successfully merged.
 
+The variable `habituation` is filled with true or false based on `trial_type`. If `trial_type` is social, nonsocial, `habituation` = True. If not, false.
+
 ```{r}
 # --- 1. Rename and Mutate ---
 MB4_short <- MB4_long_excluded %>%
@@ -611,6 +629,9 @@ MB4_short <- MB4_long_excluded %>%
     
     # Static values
     stimulus_type = "audiovisual",
+    
+    # --- Habituation Logic for MB4 ---
+    habituation = if_else(trial_type %in% c("social", "nonsocial"), TRUE, FALSE),
     
     # Age Binning
     age_group_new = cut(age_days, breaks = age_bins, labels = age_labels),
@@ -633,6 +654,7 @@ MB4_short <- MB4_long_excluded %>%
     method = case_match(
       method,
       "eye_tracking" ~ "eyetracking",
+      "eye-tracking" ~ "eyetracking",
       "single screen" ~ "singlescreen",
       .default = method
     ),
@@ -727,3 +749,16 @@ Finally, we save the merged dataset. We specify `na = "NA"` to explicitly write 
 # but your R dataframe stays clean and numeric!
 write_csv(manybabies_merged, "manybabies_merged.csv", na = "NA")
 ```
+
+# VII. Validation
+
+From each original dataset, 10 participants were randomly selected. For each selected participant, we checked whether they also appeared in the new manybabies_merged.csv dataset. If a participant was missing, we examined the source dataset to determine the reason and whether the exclusion was justified.
+
+In **MB1**, all 10 sampled participants were present in the merged dataset.
+
+In **MB3**, 3 of the 10 sampled participants were missing. These exclusions were due to:\
+– fussiness (trial error), – equipment malfunction (session error), and – caregiver interference (trial error).
+
+In **MB4**, 3 of the 10 sampled participants were also missing. The reasons were: – failure to view the critical period in two cases (session error), and – outside interference in one case (session error).
+
+The validation dataset *manybabies_validation.xlsx* is attached.
