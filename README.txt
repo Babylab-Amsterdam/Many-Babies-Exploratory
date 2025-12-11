@@ -1,4 +1,4 @@
-manybabies_merged.csv is the main dataset containing all habituation trials. A separate data file, manybabies_merged_data_dictionary.pdf, is provided to explain every variable in manybabies_merged.csv.
+manybabies_merged.csv is the main dataset containing all looking time trials. A separate data file, manybabies_merged_data_dictionary.pdf, is provided to explain every variable in manybabies_merged.csv.
 
 manybabies_merged.csv was created by homogenizing and merging data from the ManyBabies 1, 3, and 4 projects. The full processing pipeline, including all cleaning, harmonization, and merging steps, is documented in ManyBabies Data Processing.qmd. A less detailed overview of this whole process is given with ManyBabies Data Processing Overview.pdf. 
 
