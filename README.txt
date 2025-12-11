@@ -1,6 +1,6 @@
 manybabies_merged.csv is the main dataset containing all habituation trials. A separate data file, manybabies_merged_data_dictionary.pdf, is provided to explain every variable in manybabies_merged.csv.
 
-manybabies_merged.csv was created by homogenizing and merging data from the ManyBabies 1, 3, and 4 projects. The full processing pipeline, including all cleaning, harmonization, and merging steps, is documented in ManyBabies Data Processing.qmd. 
+manybabies_merged.csv was created by homogenizing and merging data from the ManyBabies 1, 3, and 4 projects. The full processing pipeline, including all cleaning, harmonization, and merging steps, is documented in ManyBabies Data Processing.qmd. A less detailed overview of this whole process is given with ManyBabies Data Processing Overview.pdf. 
 
 The Original Data Files folder contains the unmodified source datasets (MB1, MB3, MB4). When ManyBabies Data Processing.qmd is executed, it reads these original files and produces the merged output file manybabies_merged.csv.
 
