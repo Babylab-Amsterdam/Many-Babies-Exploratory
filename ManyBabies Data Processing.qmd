@@ -1,8 +1,7 @@
 ---
 title: "ManyBabies Data Processing"
-format: html
 editor: visual
-format:
+format: 
   html:
     theme: cosmo
     toc: true
