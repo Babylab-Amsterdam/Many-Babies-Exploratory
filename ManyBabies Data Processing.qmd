@@ -42,7 +42,7 @@ A small number of variables that were not available in all three datasets were s
 Some variables do not exist in any of the original datasets at all, yet they are essential for merging the datasets later and can be created easily:\
 a. **Project identifier.** This variable is absent in the original datasets but crucial for merging. We therefore created a variable `project_identifier` with values “MB1”, “MB3”, or “MB4.”\
 b. **Unique subject identifier.** This also does not exist in the original files but is necessary for merging. We created a variable `unique_subject_identifier` by concatenating project ID + lab ID + participant ID.\
-c. **Habituation**. This true/false variable can be easily created based on the type of trial. Familarization and training trials will have Habituation=false, while experimental conditions have Habituation=true.
+c. **Habituation**. This true/false variable can be easily created based on the type of trial. Familairization and training trials will have Habituation=false, while experimental conditions have Habituation=true.
 
 Other variables do not exist in all datasets in the same form but can be derived from variables that are already available:\
 a. **Household size.** MB1 contains `household_size`, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: `num_adults_household` and `num_children_household`.\
