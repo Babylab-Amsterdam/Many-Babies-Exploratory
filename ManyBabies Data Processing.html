@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -61,23 +61,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="ManyBabies Data Processing_files/libs/clipboard/clipboard.min.js"></script>
 <script src="ManyBabies Data Processing_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="ManyBabies Data Processing_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="ManyBabies Data Processing_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="ManyBabies Data Processing_files/libs/quarto-html/popper.min.js"></script>
 <script src="ManyBabies Data Processing_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="ManyBabies Data Processing_files/libs/quarto-html/anchor.min.js"></script>
 <link href="ManyBabies Data Processing_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ManyBabies Data Processing_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="ManyBabies Data Processing_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="ManyBabies Data Processing_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="ManyBabies Data Processing_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ManyBabies Data Processing_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="ManyBabies Data Processing_files/libs/bootstrap/bootstrap-8a894fcc3cb5e37eb5bf30def131be2f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a></li>
+  <li><a href="#comparing-the-variables-in-each-dataset" id="toc-comparing-the-variables-in-each-dataset" class="nav-link" data-scroll-target="#comparing-the-variables-in-each-dataset">Comparing the variables in each dataset</a></li>
+  <li><a href="#data-processing-overview" id="toc-data-processing-overview" class="nav-link" data-scroll-target="#data-processing-overview">Data Processing Overview</a></li>
+  <li><a href="#loading-tidyverse" id="toc-loading-tidyverse" class="nav-link" data-scroll-target="#loading-tidyverse">Loading tidyverse</a></li>
+  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading the data</a></li>
+  <li><a href="#i.-basic-preparation-of-each-dataframe" id="toc-i.-basic-preparation-of-each-dataframe" class="nav-link" data-scroll-target="#i.-basic-preparation-of-each-dataframe">I. Basic Preparation of Each Dataframe</a>
+  <ul class="collapse">
+  <li><a href="#create-project-identifier-variable-as-the-first-column-of-each-dataframe" id="toc-create-project-identifier-variable-as-the-first-column-of-each-dataframe" class="nav-link" data-scroll-target="#create-project-identifier-variable-as-the-first-column-of-each-dataframe">Create Project Identifier Variable as the first column of each Dataframe</a></li>
+  <li><a href="#create-a-unique-subject-identifier-in-each-dataframe" id="toc-create-a-unique-subject-identifier-in-each-dataframe" class="nav-link" data-scroll-target="#create-a-unique-subject-identifier-in-each-dataframe">Create a Unique Subject Identifier in each Dataframe</a></li>
+  <li><a href="#convert-mb4-from-a-wide-to-a-long-format" id="toc-convert-mb4-from-a-wide-to-a-long-format" class="nav-link" data-scroll-target="#convert-mb4-from-a-wide-to-a-long-format">Convert MB4 from a wide to a long format</a></li>
+  </ul></li>
+  <li><a href="#ii.-excluding-participants-from-each-dataframe" id="toc-ii.-excluding-participants-from-each-dataframe" class="nav-link" data-scroll-target="#ii.-excluding-participants-from-each-dataframe">II. Excluding participants from each DataFrame</a>
+  <ul class="collapse">
+  <li><a href="#excluding-participants-from-mb1" id="toc-excluding-participants-from-mb1" class="nav-link" data-scroll-target="#excluding-participants-from-mb1">Excluding participants from MB1</a></li>
+  <li><a href="#excluding-participants-from-mb3" id="toc-excluding-participants-from-mb3" class="nav-link" data-scroll-target="#excluding-participants-from-mb3">Excluding participants from MB3</a></li>
+  <li><a href="#excluding-participants-from-mb4_long" id="toc-excluding-participants-from-mb4_long" class="nav-link" data-scroll-target="#excluding-participants-from-mb4_long">Excluding participants from MB4_long</a></li>
+  </ul></li>
+  <li><a href="#iii.-harmonization" id="toc-iii.-harmonization" class="nav-link" data-scroll-target="#iii.-harmonization">III. Harmonization</a>
+  <ul class="collapse">
+  <li><a href="#harmonization-step-1-define-master-column-list" id="toc-harmonization-step-1-define-master-column-list" class="nav-link" data-scroll-target="#harmonization-step-1-define-master-column-list">Harmonization Step 1: Define Master Column List</a></li>
+  <li><a href="#harmonization-step-2-define-age-bins-and-labels-globally" id="toc-harmonization-step-2-define-age-bins-and-labels-globally" class="nav-link" data-scroll-target="#harmonization-step-2-define-age-bins-and-labels-globally">Harmonization Step 2: Define Age Bins and Labels globally</a></li>
+  <li><a href="#harmonization-step-3-process-mb1" id="toc-harmonization-step-3-process-mb1" class="nav-link" data-scroll-target="#harmonization-step-3-process-mb1">Harmonization Step 3: Process MB1</a></li>
+  <li><a href="#harmonization-step-4-process-mb3" id="toc-harmonization-step-4-process-mb3" class="nav-link" data-scroll-target="#harmonization-step-4-process-mb3">Harmonization Step 4: Process MB3</a></li>
+  <li><a href="#harmonization-step-5-process-mb4" id="toc-harmonization-step-5-process-mb4" class="nav-link" data-scroll-target="#harmonization-step-5-process-mb4">Harmonization Step 5: Process MB4</a></li>
+  </ul></li>
+  <li><a href="#iv.-merging-data-into-one-dataframe" id="toc-iv.-merging-data-into-one-dataframe" class="nav-link" data-scroll-target="#iv.-merging-data-into-one-dataframe">IV. Merging Data into one Dataframe</a></li>
+  <li><a href="#v.-cleaning-empty-values" id="toc-v.-cleaning-empty-values" class="nav-link" data-scroll-target="#v.-cleaning-empty-values">V. Cleaning Empty Values</a></li>
+  <li><a href="#vi.-export" id="toc-vi.-export" class="nav-link" data-scroll-target="#vi.-export">VI. Export</a></li>
+  <li><a href="#vii.-validation" id="toc-vii.-validation" class="nav-link" data-scroll-target="#vii.-validation">VII. Validation</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -104,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Project start date</strong>: 2025-09-19 Project end date: 2025-12-</p>
 <p><strong>Contributors</strong>: David Osten, Saulė Remeikaitė</p>
 <p><strong>Contact mails</strong>: david.leon.osten@gmail.com, saule.remeikaite@gmail.com</p>
-<p><strong>Project aims</strong>: Finding communalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.</p>
+<p><strong>Project aims</strong>: Finding commonalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.</p>
 <p><strong>Project objectives</strong>: Combining and standardizing MB1, MB3, MB4 datasets into one for easier further exploration Producing clear process and data documentation</p>
 <p><strong>Studies:</strong><br>
 MB1 https://manybabies.org/MB1/<br>
@@ -117,24 +152,25 @@ MB4: _clean_data.csv</p>
 </section>
 <section id="comparing-the-variables-in-each-dataset" class="level1">
 <h1>Comparing the variables in each dataset</h1>
-<p>The first step was to compare the three original datasets to determine (1) which variables they share and (2) which variables are relevant for our analysis.</p>
+<p>The first step was to compare the three original datasets to determine (1) which variables they share and (2) which variables are relevant for our analysis. All variables that fulfill both criteria are shown in the table below.</p>
 <p>Several variables present in the original datasets do not appear in the table below because they were excluded for one of two reasons:<br>
 (1) they are not available in all three datasets, or<br>
-(2) they were considered irrelevant for our purposes (e.g., <code>research assistant</code>, <code>season</code>, <code>sibling gender</code>, etc.).</p>
+(2) they were considered irrelevant for our purposes (e.g., <code>research assistant</code>)</p>
 <p>A small number of variables that were not available in all three datasets were still retained because we may obtain this information later. These include household size (data not available in MB4), participant place of birth (data not available in MB1 and MB4), race (data not available in MB4), and parental education (data not available in MB4).</p>
-<p>Some variables do not exist in the original datasets at all, yet they are essential for later merging and can be created easily:<br>
+<p>Some variables do not exist in any of the original datasets at all, yet they are essential for merging the datasets later and can be created easily:<br>
 a. <strong>Project identifier.</strong> This variable is absent in the original datasets but crucial for merging. We therefore created a variable <code>project_identifier</code> with values “MB1”, “MB3”, or “MB4.”<br>
-b. <strong>Unique subject identifier.</strong> This also does not exist in the original files but is necessary for merging. We created a variable <code>unique_subject_identifier</code> by concatenating project ID + lab ID + participant ID.</p>
+b. <strong>Unique subject identifier.</strong> This also does not exist in the original files but is necessary for merging. We created a variable <code>unique_subject_identifier</code> by concatenating project ID + lab ID + participant ID.<br>
+c.&nbsp;<strong>Habituation</strong>. This true/false variable can be easily created based on the type of trial. Familarization and training trials will have Habituation=false, while experimental conditions have Habituation=true.</p>
 <p>Other variables do not exist in all datasets in the same form but can be derived from variables that are already available:<br>
-a. <strong>Household size.</strong> MB1 contains <code>household_size</code>, while MB3 and MB4 do not. In MB3, the variable can be reconstructed by summing <code>num_adults_household</code> and <code>num_children_household</code>. In MB4 there is no data available on this.<br>
+a. <strong>Household size.</strong> MB1 contains <code>household_size</code>, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: <code>num_adults_household</code> and <code>num_children_household</code>.<br>
 b. <strong>Age group.</strong> MB1 includes <code>age_group</code>, but this variable is missing in MB3 and MB4. In these datasets, age group can be derived from the available age-in-days variables (MB3: <code>participant_age_days</code>, MB4: <code>age_days</code>).<br>
-c.&nbsp;<strong>Language group.</strong> MB1 contains <code>language_group</code> (monolingual vs.&nbsp;bilingual), but the other datasets do not. In MB3 and MB4, the variable can be created using primary language exposure (MB3: <code>lang1_exposure</code>, MB4: <code>percent_primarylanguage</code>). If primary language exposure is &lt; 80%, the participant is classified as bilingual; otherwise, as monolingual.</p>
+c.&nbsp;<strong>Language group.</strong> MB1 contains <code>language_group</code> (monolingual vs.&nbsp;bilingual), but the other datasets do not. In MB3 and MB4, the variable can be created using primary language exposure (MB3: <code>lang1_exposure</code>, MB4: <code>percent_primarylanguage</code>).</p>
 <p>The table below lists all variables that we will use moving forward, whether they are present in all datasets, judged relevant for analysis, can be created from existing information, or are currently absent but expected to be added later. The leftmost column shows the standardized variable name that we will apply across all datasets to ensure consistency.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 13%">
+<col style="width: 11%">
 <col style="width: 29%">
-<col style="width: 27%">
+<col style="width: 29%">
 <col style="width: 29%">
 </colgroup>
 <tbody>
@@ -195,9 +231,9 @@ participant_sex</strong></td>
 <tr class="odd">
 <td><strong>Stimulus type:<br>
 stimulus_type</strong></td>
-<td><em>[variable doesn’t exist but can easily be created]</em></td>
-<td><em>[variable doesn’t exist but can easily be created]</em></td>
-<td><em>[variable doesn’t exist but can easily be created]</em></td>
+<td><em>[variable doesn’t exist but can easily be created. Value will be “audiovisual” for all]</em></td>
+<td><em>[variable doesn’t exist but can easily be created. Value will be “audiovisual” for all]</em></td>
+<td><em>[variable doesn’t exist but can easily be created. Value will be “audiovisual” for all]</em></td>
 </tr>
 <tr class="even">
 <td><strong>Trial Number:<br>
@@ -214,89 +250,96 @@ trial_type</strong></td>
 <td>condition</td>
 </tr>
 <tr class="even">
+<td><strong>Habituation:<br>
+habituation</strong></td>
+<td><em>[variable doesn’t exist but can easily be created]</em></td>
+<td><em>[variable doesn’t exist but can easily be created]</em></td>
+<td><em>[variable doesn’t exist but can easily be created]</em></td>
+</tr>
+<tr class="odd">
 <td><strong>Looking Time:<br>
 looking_time</strong></td>
 <td>looking_time</td>
 <td>looking_time_seconds</td>
 <td>lookingtime_videoevent</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td></td>
 <td></td>
 <td>lookingtime_freezeframe</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Household Size:<br>
 household_size</strong></td>
 <td>household_size</td>
 <td><em>[variable doesn’t exist but can easily be created based on other data]</em></td>
 <td><em>[variable doesn’t exist and CANNOT be created because no data is available]</em></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Participant Place of Birth:<br>
 participant_place_of_birth</strong></td>
 <td><em>[variable doesn’t exist and CANNOT be created because no data is available]</em></td>
 <td>participant_place_of_birth</td>
 <td><em>[variable doesn’t exist and CANNOT be created because no data is available]</em></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Education of first parent:<br>
 parent1_education</strong></td>
 <td>parenta_education</td>
 <td>caregiver1_education_construct_response</td>
 <td><em>[variable doesn’t exist and CANNOT be created because no data is available]</em></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Education of second parent:<br>
 parent2_education</strong></td>
 <td>parentb_education</td>
 <td>caregiver2_education_construct_response</td>
 <td><em>[variable doesn’t exist and CANNOT be created because no data is available]</em></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Second session:<br>
 second_session</strong></td>
 <td>second_session</td>
 <td>second_session</td>
 <td>second_session</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Primary Caregiver Gender:<br>
 primarycaregiver_gender</strong></td>
 <td>parenta_gender</td>
 <td>caregiver1_gender</td>
 <td>primarycaregiver_gender</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Language group:<br>
 language_group</strong></td>
 <td>lang_group</td>
 <td><em>[variable doesn’t exist but can easily be created based on other data]</em></td>
 <td><em>[variable doesn’t exist but can easily be created based on other data]</em></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Primary Language:<br>
 primary_language</strong></td>
 <td>lang_group</td>
 <td>lang1_name</td>
 <td>primary_language</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Primary Language Exposure:<br>
 primary_language_exposure</strong></td>
 <td>lang1_exposure</td>
 <td>lang1_exposure</td>
 <td>percent_primarylanguage</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Position of Baby:<br>
 caregiver_seat</strong></td>
 <td>caregiver_seat</td>
 <td>caregiver_seat</td>
 <td>caregiver_seat</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Race</strong></td>
 <td>race_ethnicity</td>
 <td>race_construct_response</td>
@@ -310,8 +353,8 @@ caregiver_seat</strong></td>
 <p>The end product should be a single .csv file that contains the looking time data and other relevant variables of all three datasets.</p>
 <p>For this, we follow a systematic pipeline:<br>
 <strong>I. Preparation</strong>: Creating identifiers and reshaping data structures (long vs.&nbsp;wide) so that datasets are compatible.<br>
-<strong>II. Exclusion</strong>: Filtering out participants based on study-specific exclusion criteria (e.g., fussiness, equipment error).<br>
-<strong>III. Harmonization</strong>: Renaming variables to a master standard, calculating derived variables (like age bins or household size), and ensuring all datasets share the exact same column structure. And lastly, standardizing variable values across all three datasets.<br>
+<strong>II. Exclusion</strong>: Filtering out participants based on determined exclusion criteria<br>
+<strong>III. Harmonization</strong>: Renaming variables to a master standard, calculating derived variables (e.g.&nbsp;household size and language group), and ensuring all datasets share the exact same column structure. And lastly, standardizing the values that variables can take across all three datasets.<br>
 <strong>IV. Merging</strong>: Combining the harmonized datasets into one master file.<br>
 <strong>V. Cleaning Empty Values</strong><br>
 <strong>VI. Export</strong></p>
@@ -319,15 +362,15 @@ caregiver_seat</strong></td>
 <section id="loading-tidyverse" class="level1">
 <h1>Loading tidyverse</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="loading-the-data" class="level1">
 <h1>Loading the data</h1>
-<p>We load the raw datasets for MB1, MB3, and MB4. These files are located in the <code>Original Data Files/</code> subdirectory to keep the project structure clean.</p>
+<p>We load the raw datasets for MB1, MB3, and MB4. These files are located in the <code>Original Data Files/</code> subdirectory. Now we have three dataframes, called MB1, MB3, MB4.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MB1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB1_02_validated_output.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MB1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB1_02_validated_output.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 50080 Columns: 80
 ── Column specification ────────────────────────────────────────────────────────
@@ -339,7 +382,7 @@ lgl (13): trial_error, session_error, second_session, lang4, lang4_exposure,...
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>MB3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB3_02_validated_merged_output.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>MB3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB3_02_validated_merged_output.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 10416 Columns: 61
 ── Column specification ────────────────────────────────────────────────────────
@@ -350,7 +393,7 @@ dbl (12): trial_num, looking_time_seconds, trial_time_seconds, participant_a...
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>MB4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB4_clean_data.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>MB4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Original Data Files/MB4_clean_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1018 Columns: 102
 ── Column specification ────────────────────────────────────────────────────────
@@ -367,9 +410,9 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <h1>I. Basic Preparation of Each Dataframe</h1>
 <section id="create-project-identifier-variable-as-the-first-column-of-each-dataframe" class="level3">
 <h3 class="anchored" data-anchor-id="create-project-identifier-variable-as-the-first-column-of-each-dataframe">Create Project Identifier Variable as the first column of each Dataframe</h3>
-<p>First things first, we must tag each row with its source study. We create a <code>project_id</code> column and move it to the first position. This allows us to know which study each trial is from after merging.</p>
+<p>First things first, we must tag each row with its source study. We create a <code>project_id</code> column and move it to the first position. This allows us to know which study each trial is from even after merging.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MB1 <span class="ot">&lt;-</span> MB1 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MB1 <span class="ot">&lt;-</span> MB1 <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">project_id =</span> <span class="st">"MB1"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(project_id)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -379,14 +422,14 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>MB4 <span class="ot">&lt;-</span> MB4 <span class="sc">%&gt;%</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">project_id =</span> <span class="st">"MB4"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(project_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(project_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-a-unique-subject-identifier-in-each-dataframe" class="level3">
 <h3 class="anchored" data-anchor-id="create-a-unique-subject-identifier-in-each-dataframe">Create a Unique Subject Identifier in each Dataframe</h3>
 <p>Subject IDs are not unique across projects. To ensure every row has a globally unique identifier, we construct a composite key: project id + lab id + participant id. This prevents ID collisions when the data is merged. The names of the lab id and participant id variables are slightly different in each dataframe, which is why the code isn’t identical for each dataframe.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MB1 Processing</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MB1 Processing</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>MB1 <span class="ot">&lt;-</span> MB1 <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unique_subject_identifier =</span> <span class="fu">paste</span>(project_id, lab, subid, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(unique_subject_identifier, <span class="at">.after =</span> project_id)</span>
@@ -399,7 +442,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># MB4 Processing</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>MB4 <span class="ot">&lt;-</span> MB4 <span class="sc">%&gt;%</span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unique_subject_identifier =</span> <span class="fu">paste</span>(project_id, lab_id, subj_id, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(unique_subject_identifier, <span class="at">.after =</span> project_id)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(unique_subject_identifier, <span class="at">.after =</span> project_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="convert-mb4-from-a-wide-to-a-long-format" class="level3">
@@ -410,9 +453,10 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <li><p>We identify columns starting with <code>trial</code> followed by a number.</p></li>
 <li><p>We use a regular expression (<code>names_pattern</code>) to extract the <strong>trial number</strong> and the <strong>metric name</strong> (e.g., <code>lookingtime</code>) from the column headers.</p></li>
 <li><p>We reshape the data so that each trial becomes a specific row.</p></li>
+<li><p>Lastly, we remove “trailing” empty trials (trials that did not happen): The original wide-format CSV file has a fixed number of columns, up to trial 14, for every participant. However, this is only the maximum number of trials. Many infants finish the experiment before reaching trial 14. The consequence: When we pivot this data, R creates a row for every column found in the file. A participant who stopped after Trial 7 will therefore have 7 rows of real data followed by 7 rows of NAs (representing trials that never happened). We filter the data to remove these “structural” NAs at the end, while carefully preserving “intermittent” NAs (e.g., if Trial 3 is missing but Trial 4 exists, we keep Trial 3).</p></li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MB4_long <span class="ot">&lt;-</span> MB4 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MB4_long <span class="ot">&lt;-</span> MB4 <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select all columns that look like "trial" followed by a number and underscore</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^trial</span><span class="sc">\\</span><span class="st">d+_"</span>),</span>
@@ -427,35 +471,37 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Automatically convert the extracted trial number to an integer</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">trial_number =</span> as.integer)</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reorder columns to match your Python output preference:</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># IDs first, then trial number, then the specific trial metrics</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    project_id,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    unique_subject_identifier,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    trial_number,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    sawcriticalevent,</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    lookingtime_videoevent,</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    lookingtime_freezeframe,</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    numrepeats,</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> <span class="fu">last_col</span>() <span class="co"># or arrange them specifically after unique_subject_identifier</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># To strictly ensure IDs are first (like your Python script), we can just </span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># move the known trial columns to the right, or specific IDs to the left.</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The default behavior of pivot_longer keeps IDs on the left, so we just</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># need to ensure project_id and unique_subject_identifier are truly first.</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(project_id, unique_subject_identifier)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reorder columns to match your Python output preference</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    project_id,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    unique_subject_identifier,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    trial_number,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    sawcriticalevent,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    lookingtime_videoevent,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    lookingtime_freezeframe,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    numrepeats,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> <span class="fu">last_col</span>() </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(project_id, unique_subject_identifier) <span class="sc">%&gt;%</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- Trim Trailing NAs ---</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(unique_subject_identifier) <span class="sc">%&gt;%</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter: Keep trials that are &lt;= the last trial containing real data.</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We use `c(..., 0)` to handle cases where a participant might have ALL NAs safely.</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(trial_number <span class="sc">&lt;=</span> <span class="fu">max</span>(<span class="fu">c</span>(trial_number[<span class="sc">!</span><span class="fu">is.na</span>(lookingtime_videoevent)], <span class="dv">0</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="ii.-excluding-participants-from-each-dataframe" class="level1">
 <h1>II. Excluding participants from each DataFrame</h1>
-<p>Although the original datasets contain summary binary variables indicating whether a participant was excluded (e.g., <code>session_inclusion</code>: include/exclude), we did not rely on these. Instead, we re-evaluated eligibility based on granular exclusion criteria. This allowed us to modify the inclusion logic: unlike the original studies, we <strong>retained</strong> participants who were previously excluded solely due to age or language background. However, we strictly enforced exclusions related to data validity, removing participants or trials flagged for technical errors, developmental disorders, or fussiness.</p>
+<p>Although the original datasets contain summary binary variables indicating whether a participant was excluded (e.g., <code>session_inclusion</code>: include/exclude), we did not rely on these. Instead, we re-evaluated eligibility based on granular exclusion criteria. This allowed us to modify the inclusion logic: unlike the original studies, we retained participants who were previously excluded solely due to age or language background. However, we strictly enforced exclusions related to data validity, removing participants or trials flagged for technical errors, developmental disorders, or fussiness.</p>
 <section id="excluding-participants-from-mb1" class="level3">
 <h3 class="anchored" data-anchor-id="excluding-participants-from-mb1">Excluding participants from MB1</h3>
 <p>MB1 has <code>session_error</code> (true/false) and <code>trial_error</code> (true/false) as summary variables for exclusion in their original data file. However, we did not rely on these. Instead, we looked more closely at <code>session_error_type</code> and <code>trial_error_type</code>. We ended up excluding all <code>trial_error_type</code> values except those that indicate language-based exclusion, age-based exclusion, or NA and empty values (indicating no error). We ended up excluding all <code>session_error_type</code> values except those that indicate language-based exclusion, age-based exclusion, or NA and empty values.</p>
 <p>The new dataframe is called MB1_excluded.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Define KEEP values for trial_error_type ---</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Define KEEP values for trial_error_type ---</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>trial_keep_values <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bilingual"</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"NA"</span>,</span>
@@ -499,8 +545,9 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(trial_error_type, <span class="st">""</span>) <span class="sc">%in%</span> trial_keep_values,</span>
 <span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check session_error_type (converting real NAs to "" to match the list)</span></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(session_error_type, <span class="st">""</span>) <span class="sc">%in%</span> session_keep_values</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(session_error_type, <span class="st">""</span>) <span class="sc">%in%</span> session_keep_values,</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="excluding-participants-from-mb3" class="level3">
@@ -508,7 +555,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <p>MB3 has trial_error (error/no_error) and <code>session_inclusion</code> (include/exclude) as a summary variables for exclusion in their original data file. However, we did not rely on them. Instead, we looked more closely at the specific trial_error_info, session_exclusion_reason_1, session_exclusion_reason_2, session_exclusion_reason_3, session_exclusion_reason_4 variables. We ended up excluding all <code>trial_error_info</code> values except “no_error” or NA and empty values. We ended up excluding all session exclusion values except those that indicate age-based exclusion (specifically “outside_age_range”) or NA and empty values (indicating no error).</p>
 <p>The new dataframe is called MB3_excluded.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the keep values for the trial error info</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the keep values for the trial error info</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mb3_keep_values_trial <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NA"</span>, <span class="st">"no_error"</span>, <span class="st">""</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the keep values for session reason 1</span></span>
@@ -526,7 +573,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(session_exclusion_reason_2, <span class="st">"NA"</span>) <span class="sc">==</span> <span class="st">"NA"</span>,</span>
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(session_exclusion_reason_3, <span class="st">"NA"</span>) <span class="sc">==</span> <span class="st">"NA"</span>,</span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(session_exclusion_reason_4, <span class="st">"NA"</span>) <span class="sc">==</span> <span class="st">"NA"</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="excluding-participants-from-mb4_long" class="level3">
@@ -534,7 +581,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <p>MB4 has <strong><code>exclude_session</code></strong> (containing “excluded” or “NA”) as a summary variable for exclusion. However, we did not rely on this. Instead, we looked more closely at the four columns <code>exclusion_type_1</code> through <code>exclusion_type_4</code>. We excluded participants based on all recorded error types, with one specific exception: we retained participants marked with <strong>“FailToMakeChoice”</strong>. Since this error relates to the test phase that occurs <em>after</em> the habituation phase, it does not impact the validity of the habituation looking time data we are analyzing. Participants with no recorded errors (“NA”) were also retained.</p>
 <p>The new dataframe is called MB4_long_excluded.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the list of strings that trigger exclusion</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the list of strings that trigger exclusion</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>exclusion_criteria <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DevDisorder"</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"EquipmentError"</span>,</span>
@@ -556,18 +603,18 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(exclusion_type_1, exclusion_type_2, exclusion_type_3, exclusion_type_4),</span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">str_detect</span>(<span class="fu">replace_na</span>(., <span class="st">""</span>), exclusion_pattern)</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="iii.-harmonization" class="level1">
 <h1>III. Harmonization</h1>
-<p>This is the most complex step. We transform each filtered dataframe (_excluded) into a standardized format (<code>_short</code> version), which only contains the relevant and shared variables in the table shown at the beginning of this document.</p>
+<p>This is the most complex step. We transform each filtered dataframe (<code>_excluded</code>) into a standardized format (<code>_short</code> version), which only contains the relevant and shared variables in the table shown at the beginning of this document.</p>
 <section id="harmonization-step-1-define-master-column-list" class="level3">
 <h3 class="anchored" data-anchor-id="harmonization-step-1-define-master-column-list">Harmonization Step 1: Define Master Column List</h3>
 <p>We define a <code>CORE_COLUMNS</code> list representing the final variables we want to keep. We also define <code>FINAL_MB4_COLUMNS</code> to include MB4-specific backup looking time variables.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A. CORE columns that MUST be in all three dataframes</span></span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A. CORE columns that MUST be in all three dataframes</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>CORE_COLUMNS <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"project_id"</span>,</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lab_id"</span>,</span>
@@ -579,45 +626,50 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"stimulus_type"</span>,</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"trial_type"</span>,</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"trial_number"</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"looking_time"</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"household_size"</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parent1_education"</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parent2_education"</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"participant_place_of_birth"</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"race"</span>,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primarycaregiver_gender"</span>,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"language_group"</span>,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primary_language"</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primary_language_exposure"</span>,</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"caregiver_seat"</span>,</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"second_session"</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co"># B. MB4-Specific columns (Backup Looking Times)</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>MB4_BACKUP_COLUMNS <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lookingtime_videoevent_backup"</span>,</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lookingtime_freezeframe_backup"</span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co"># The full column set for MB4_short</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>FINAL_MB4_COLUMNS <span class="ot">&lt;-</span> <span class="fu">c</span>(CORE_COLUMNS, MB4_BACKUP_COLUMNS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"habituation"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"looking_time"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"household_size"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parent1_education"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parent2_education"</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"participant_place_of_birth"</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"race"</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primarycaregiver_gender"</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"language_group"</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primary_language"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"primary_language_exposure"</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"caregiver_seat"</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"second_session"</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co"># B. MB4-Specific columns (Backup Looking Times)</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>MB4_BACKUP_COLUMNS <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lookingtime_videoevent_backup"</span>,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lookingtime_freezeframe_backup"</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co"># The full column set for MB4_short</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>FINAL_MB4_COLUMNS <span class="ot">&lt;-</span> <span class="fu">c</span>(CORE_COLUMNS, MB4_BACKUP_COLUMNS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="harmonization-step-2-define-age-bins-and-labels-globally" class="level3">
 <h3 class="anchored" data-anchor-id="harmonization-step-2-define-age-bins-and-labels-globally">Harmonization Step 2: Define Age Bins and Labels globally</h3>
-<p>For the later calculation of the age_group variable (which does not exist in MB3 and MB4), we define age bins.</p>
+<p>For the later calculation of the age_group variable (which does not exist in MB3 and MB4), we define age bins globally.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>age_bins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">182</span>, <span class="dv">273</span>, <span class="dv">364</span>, <span class="dv">455</span>, <span class="dv">546</span>, <span class="dv">637</span>)</span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>age_bins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">182</span>, <span class="dv">273</span>, <span class="dv">364</span>, <span class="dv">455</span>, <span class="dv">546</span>, <span class="dv">637</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>age_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"3–6 months"</span>, <span class="st">"6–9 months"</span>, <span class="st">"9–12 months"</span>,</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"12–15 months"</span>, <span class="st">"15–18 months"</span>, <span class="st">"18–21 months"</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="harmonization-step-3-process-mb1" class="level3">
 <h3 class="anchored" data-anchor-id="harmonization-step-3-process-mb1">Harmonization Step 3: Process MB1</h3>
+<p>The harmonization of MB1 began by renaming existing variables to align with our standardized master list.</p>
+<p>Following this, we calculated derived variables, which in MB1s case only meant calculating the <code>age_group</code> variable. The original MB1 dataset actually included an <code>age_group</code> variable, but it contained missing values. This was not a problem, however, as we still had the age_days variable. To resolve these gaps and ensure consistency across all three projects, we created a new variable, <code>age_group_new</code>. We applied the original MB1 binning structure (3–6, 6–9, 9–12, and 12–15 months) but extended it to include 15–18 and 18–21 month intervals. This extension allows us to accommodate the older participant ranges present in the other two studies within a single, unified schema. Then, we calculated in which age bin each participant falls in based on the age_days variable.</p>
+<p>Finally, we standardized specific variable values. This meant correcting spelling errors (e.g., fixing “monolinugal” to “monolingual”) and mapping the various free-text descriptions of the baby’s position (e.g., “high chair”, “ceregiver”, “seat/caregiver”) into three standardized categories: <code>caregiver_lap_only</code>, <code>seat_alone_only</code>, or <code>changed_throughout</code>. These categories would then also be applied to the other two studies.</p>
+<p>The variable <code>habituation</code> is filled with true or false based on <code>trial_type</code>. If <code>trial_type</code> is IDS, ADS, <code>habituation</code> = True. If not (TRAIN), false.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>MB1_short <span class="ot">&lt;-</span> MB1_excluded <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>MB1_short <span class="ot">&lt;-</span> MB1_excluded <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 1. Rename existing columns ---</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">lab_id =</span> lab,</span>
@@ -637,41 +689,50 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create static columns</span></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">stimulus_type =</span> <span class="st">"audiovisual"</span>,</span>
 <span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning (similar to pd.cut)</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- Habituation Logic for MB1 ---</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">habituation =</span> <span class="fu">if_else</span>(trial_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"IDS"</span>, <span class="st">"ADS"</span>), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
 <span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fix spelling in language_group</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">str_replace</span>(language_group, <span class="st">"monolinugal"</span>, <span class="st">"monolingual"</span>),</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning (similar to pd.cut)</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize caregiver_seat using case_match</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This replaces the long dictionary from Python</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"caregiver"</span>, <span class="st">"ceregiver"</span>, <span class="st">"Caregiver"</span>, <span class="st">"Caregivers lap"</span>,</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"caregiver (started with chair but moved before trials started)"</span>) <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat/caregiver"</span> <span class="sc">~</span> <span class="st">"changed_throughout"</span>,</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"high chair"</span>, <span class="st">"Seat"</span>, <span class="st">"seat"</span>) <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat <span class="co"># Keep original if no match</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Handle NA/Empty strings for seat</span></span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat)</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 3. Ensure all CORE columns exist (The Reindex Step) ---</span></span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This finds which CORE columns are missing and adds them as NA</span></span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_dfc</span>(<span class="fu">setdiff</span>(CORE_COLUMNS, <span class="fu">names</span>(.)), <span class="sc">~</span> <span class="fu">tibble</span>(<span class="sc">!!</span><span class="at">.x :=</span> <span class="cn">NA</span>))</span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 4. Final Selection and Reordering ---</span></span>
-<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(CORE_COLUMNS))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fix spelling in language_group</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">str_replace</span>(language_group, <span class="st">"monolinugal"</span>, <span class="st">"monolingual"</span>),</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize caregiver_seat using case_match</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This replaces the long dictionary from Python</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"caregiver"</span>, <span class="st">"ceregiver"</span>, <span class="st">"Caregiver"</span>, <span class="st">"Caregivers lap"</span>,</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"caregiver (started with chair but moved before trials started)"</span>) <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat/caregiver"</span> <span class="sc">~</span> <span class="st">"changed_throughout"</span>,</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"high chair"</span>, <span class="st">"Seat"</span>, <span class="st">"seat"</span>) <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat <span class="co"># Keep original if no match</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Handle NA/Empty strings for seat</span></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat)</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 3. Ensure all CORE columns exist (The Reindex Step) ---</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This finds which CORE columns are missing and adds them as NA</span></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_dfc</span>(<span class="fu">setdiff</span>(CORE_COLUMNS, <span class="fu">names</span>(.)), <span class="sc">~</span> <span class="fu">tibble</span>(<span class="sc">!!</span><span class="at">.x :=</span> <span class="cn">NA</span>))</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 4. Final Selection and Reordering ---</span></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(CORE_COLUMNS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="harmonization-step-4-process-mb3" class="level3">
 <h3 class="anchored" data-anchor-id="harmonization-step-4-process-mb3">Harmonization Step 4: Process MB3</h3>
+<p>The harmonization of MB3 followed a similar workflow, beginning with the renaming of variables to match our master list.</p>
+<p>Following this, we calculated several derived variables that were not explicitly present in the raw data. First, unlike MB1 which provided a total household count, MB3 required us to calculate this metric. We derived <code>household_size</code> by summing the <code>num_adults_household</code> and <code>num_children_household</code>, plus one to include the participant.</p>
+<p>Second, unlike MB1 which provided a language_group variable, we had to derive <code>language_group</code> in MB3 based on the recorded percentage of primary language exposure. MB1 mostly classified monolingual participants as participants having a primary language exposure of between 90 - 100 percent (however, there were also some outliers who had 70 percent primary language exposure and were still classified as monolingual). Still, we decided to use 90% as the cutoff for monolingual to bilingual. However, the MB3 data presented a unique distribution: many participants listed a ‘primary’ language with exposure rates below 50%, with some even lower than 30%. Since an exposure rate this low typically contradicts the definition of a ‘primary’ language, we adjusted our classification thresholds to capture this variance. Consequently, participants with exposure between 10% and 90% were classified as ‘bilingual,’ while those falling outside this range were labeled ‘monolingual.’</p>
+<p>We also applied the same extended age binning logic used for MB1 to create <code>age_group_new</code>.</p>
+<p>Finally, we standardized categorical variables. This involved normalizing gender and sex inputs (converting “female”/“male” to “F”/“M”), aligning experimental method descriptions (e.g., mapping “singlescreen_cf” to “singlescreen”), and converting the <code>second_session</code> variable into a uniform Boolean string format.</p>
+<p>The variable <code>habituation</code> is filled with true or false based on <code>trial_type</code>. If <code>trial_type</code> is consistent, inconsistent, <code>habituation</code> = True. If not (fam), false.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Rename and Mutate (Standardizing values) ---</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Rename and Mutate (Standardizing values) ---</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>MB3_short <span class="ot">&lt;-</span> MB3_excluded <span class="sc">%&gt;%</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_days =</span> participant_age_days,</span>
@@ -687,79 +748,89 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">stimulus_type =</span> <span class="st">"audiovisual"</span>,</span>
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate Household Size (Adults + Children + Participant)</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">household_size =</span> <span class="fu">as.numeric</span>(num_adults_household) <span class="sc">+</span> </span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(num_children_household) <span class="sc">+</span> <span class="dv">1</span>,</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- Habituation Logic for MB3 ---</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">habituation =</span> <span class="fu">if_else</span>(trial_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"consistent"</span>, <span class="st">"inconsistent"</span>), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate Household Size (Adults + Children + Participant)</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">household_size =</span> <span class="fu">as.numeric</span>(num_adults_household) <span class="sc">+</span> </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(num_children_household) <span class="sc">+</span> <span class="dv">1</span>,</span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Language Group Logic</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">if_else</span>(</span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">between</span>(primary_language_exposure, <span class="dv">20</span>, <span class="dv">80</span>), </span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"bilingual"</span>, </span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">"monolingual"</span></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Gender</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">primarycaregiver_gender =</span> <span class="fu">case_match</span>(</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>      primarycaregiver_gender,</span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>      <span class="st">"another_response"</span> <span class="sc">~</span> <span class="st">"other"</span>,</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> primarycaregiver_gender</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_sex =</span> <span class="fu">case_match</span>(</span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>      participant_sex,</span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> participant_sex</span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Method</span></span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">case_match</span>(</span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>      method,</span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">"singlescreen_cf"</span> <span class="sc">~</span> <span class="st">"singlescreen"</span>,</span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">"singlescreen_eyetracker"</span> <span class="sc">~</span> <span class="st">"eyetracking"</span>,</span>
-<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>      <span class="st">"HPP"</span> <span class="sc">~</span> <span class="st">"hpp"</span>,</span>
-<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> method</span>
-<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Second Session</span></span>
-<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">second_session =</span> <span class="fu">case_match</span>(</span>
-<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>      second_session,</span>
-<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"NA"</span>, <span class="st">"no"</span>) <span class="sc">~</span> <span class="st">"False"</span>,</span>
-<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"yes"</span>, <span class="st">"Yes"</span>) <span class="sc">~</span> <span class="st">"True"</span>,</span>
-<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"False"</span></span>
-<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Caregiver Seat</span></span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"caregicer"</span>, <span class="st">"caregive"</span>, <span class="st">"caregiver"</span>) <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
-<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"seat"</span>, <span class="st">"chair"</span>) <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat</span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat)</span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Add Missing CORE Columns (The "Reindex" Step) ---</span></span>
-<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify which CORE columns are currently missing from MB3_short</span></span>
-<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>missing_cols <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(CORE_COLUMNS, <span class="fu">names</span>(MB3_short))</span>
-<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign them as NA</span></span>
-<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>MB3_short[missing_cols] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Language Group Logic</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">if_else</span>(</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">between</span>(primary_language_exposure, <span class="dv">10</span>, <span class="dv">90</span>), </span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">"bilingual"</span>, </span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>      <span class="st">"monolingual"</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Gender</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">primarycaregiver_gender =</span> <span class="fu">case_match</span>(</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>      primarycaregiver_gender,</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>      <span class="st">"another_response"</span> <span class="sc">~</span> <span class="st">"other"</span>,</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> primarycaregiver_gender</span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_sex =</span> <span class="fu">case_match</span>(</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>      participant_sex,</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> participant_sex</span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Method</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">case_match</span>(</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>      method,</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>      <span class="st">"singlescreen_cf"</span> <span class="sc">~</span> <span class="st">"singlescreen"</span>,</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>      <span class="st">"singlescreen_eyetracker"</span> <span class="sc">~</span> <span class="st">"eyetracking"</span>,</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>      <span class="st">"HPP"</span> <span class="sc">~</span> <span class="st">"hpp"</span>,</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> method</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Second Session</span></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">second_session =</span> <span class="fu">case_match</span>(</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>      second_session,</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"NA"</span>, <span class="st">"no"</span>) <span class="sc">~</span> <span class="st">"False"</span>,</span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"yes"</span>, <span class="st">"Yes"</span>) <span class="sc">~</span> <span class="st">"True"</span>,</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"False"</span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Caregiver Seat</span></span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"caregicer"</span>, <span class="st">"caregive"</span>, <span class="st">"caregiver"</span>) <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"seat"</span>, <span class="st">"chair"</span>) <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat</span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat)</span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Add Missing CORE Columns (The "Reindex" Step) ---</span></span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify which CORE columns are currently missing from MB3_short</span></span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>missing_cols <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(CORE_COLUMNS, <span class="fu">names</span>(MB3_short))</span>
 <span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Final Selection ---</span></span>
-<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>MB3_short <span class="ot">&lt;-</span> MB3_short <span class="sc">%&gt;%</span></span>
-<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(CORE_COLUMNS))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign them as NA</span></span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>MB3_short[missing_cols] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Final Selection ---</span></span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a>MB3_short <span class="ot">&lt;-</span> MB3_short <span class="sc">%&gt;%</span></span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(CORE_COLUMNS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="harmonization-step-5-process-mb4" class="level3">
 <h3 class="anchored" data-anchor-id="harmonization-step-5-process-mb4">Harmonization Step 5: Process MB4</h3>
+<p>The harmonization of MB4 involved transforming the <code>MB4_long_excluded</code> dataset into the standardized <code>MB4_short</code> format.</p>
+<p>A unique step for this dataset was the preservation of specific looking time metrics. In contrast to MB1 and MB3, MB4 had two looking time variables: <code>lookingtime_videoevent</code> (looking time while the video was played) and <code>lookingtime_freezeframe</code> (looking time after the video ended, with the last frame remaining frozen on the screen).</p>
+<p>We renamed the original variables to serve as ‘backup’ columns (<code>lookingtime_videoevent_backup</code> and <code>lookingtime_freezeframe_backup</code>) and established the primary <code>looking_time</code> variable using <code>lookingtime_videoevent</code>.</p>
+<p>For <code>age_group_new</code>, we applied the same extended age binning logic used in the previous steps.</p>
+<p>For language classification, we utilized the <code>primary_language_exposure</code> variable. Consistent with the logic described in MB3, we classified participants with exposure between 10% and 90% as “bilingual” and those outside this range as “monolingual.”</p>
+<p>Standardization of variable values involved mapping text values to our master schema (e.g., converting “eye_tracking” to “eyetracking” and “Y”/“N” session flags to “True”/“False”). Finally, since MB4 lacked several demographic variables present in the other studies (such as <code>household_size</code> and <code>race</code>), we programmatically identified these missing columns from our target list and filled them with <code>NA</code> values to ensure the dataset could be successfully merged.</p>
+<p>The variable <code>habituation</code> is filled with true or false based on <code>trial_type</code>. If <code>trial_type</code> is social, nonsocial, <code>habituation</code> = True. If not, false.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Rename and Mutate ---</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 1. Rename and Mutate ---</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>MB4_short <span class="ot">&lt;-</span> MB4_long_excluded <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_sex =</span> participant_gender,</span>
@@ -777,67 +848,71 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Static values</span></span>
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">stimulus_type =</span> <span class="st">"audiovisual"</span>,</span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --- Habituation Logic for MB4 ---</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">habituation =</span> <span class="fu">if_else</span>(trial_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"social"</span>, <span class="st">"nonsocial"</span>), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Gender</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">primarycaregiver_gender =</span> <span class="fu">case_match</span>(</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>      primarycaregiver_gender,</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> primarycaregiver_gender</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_sex =</span> <span class="fu">case_match</span>(</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>      participant_sex,</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> participant_sex</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Method</span></span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">case_match</span>(</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>      method,</span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eye_tracking"</span> <span class="sc">~</span> <span class="st">"eyetracking"</span>,</span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>      <span class="st">"single screen"</span> <span class="sc">~</span> <span class="st">"singlescreen"</span>,</span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> method</span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Second Session</span></span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">second_session =</span> <span class="fu">case_match</span>(</span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>      second_session,</span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"N"</span> <span class="sc">~</span> <span class="st">"False"</span>,</span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Y"</span> <span class="sc">~</span> <span class="st">"True"</span>,</span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> second_session</span>
-<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Caregiver Seat</span></span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>      <span class="st">"caregiver"</span> <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat"</span> <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat_caregiver"</span> <span class="sc">~</span> <span class="st">"changed_throughout"</span>,</span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat</span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat),</span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Language Group Logic</span></span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">if_else</span>(</span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>      <span class="fu">between</span>(primary_language_exposure, <span class="dv">20</span>, <span class="dv">80</span>), </span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>      <span class="st">"bilingual"</span>, </span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>      <span class="st">"monolingual"</span></span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Add Missing Columns (using FINAL_MB4_COLUMNS list) ---</span></span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify which columns from the target list are missing</span></span>
-<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>missing_cols_mb4 <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(FINAL_MB4_COLUMNS, <span class="fu">names</span>(MB4_short))</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Age Binning</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_group_new =</span> <span class="fu">cut</span>(age_days, <span class="at">breaks =</span> age_bins, <span class="at">labels =</span> age_labels),</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Gender</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">primarycaregiver_gender =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>      primarycaregiver_gender,</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> primarycaregiver_gender</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_sex =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>      participant_sex,</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>      <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>      <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"M"</span>,</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> participant_sex</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Method</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>      method,</span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eye_tracking"</span> <span class="sc">~</span> <span class="st">"eyetracking"</span>,</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>      <span class="st">"eye-tracking"</span> <span class="sc">~</span> <span class="st">"eyetracking"</span>,</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>      <span class="st">"single screen"</span> <span class="sc">~</span> <span class="st">"singlescreen"</span>,</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> method</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Second Session</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">second_session =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>      second_session,</span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>      <span class="st">"N"</span> <span class="sc">~</span> <span class="st">"False"</span>,</span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Y"</span> <span class="sc">~</span> <span class="st">"True"</span>,</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> second_session</span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standardize Caregiver Seat</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>      caregiver_seat,</span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>      <span class="st">"caregiver"</span> <span class="sc">~</span> <span class="st">"caregiver_lap_only"</span>,</span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat"</span> <span class="sc">~</span> <span class="st">"seat_alone_only"</span>,</span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">"seat_caregiver"</span> <span class="sc">~</span> <span class="st">"changed_throughout"</span>,</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> caregiver_seat</span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">caregiver_seat =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(caregiver_seat) <span class="sc">|</span> caregiver_seat <span class="sc">==</span> <span class="st">""</span>, <span class="st">"NA"</span>, caregiver_seat),</span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Language Group Logic</span></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">language_group =</span> <span class="fu">if_else</span>(</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a>      <span class="fu">between</span>(primary_language_exposure, <span class="dv">10</span>, <span class="dv">90</span>), </span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a>      <span class="st">"bilingual"</span>, </span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a>      <span class="st">"monolingual"</span></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign them as NA</span></span>
-<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a>MB4_short[missing_cols_mb4] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Final Selection ---</span></span>
-<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a>MB4_short <span class="ot">&lt;-</span> MB4_short <span class="sc">%&gt;%</span></span>
-<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(FINAL_MB4_COLUMNS))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 2. Add Missing Columns (using FINAL_MB4_COLUMNS list) ---</span></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify which columns from the target list are missing</span></span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>missing_cols_mb4 <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(FINAL_MB4_COLUMNS, <span class="fu">names</span>(MB4_short))</span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign them as NA</span></span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>MB4_short[missing_cols_mb4] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 3. Final Selection ---</span></span>
+<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a>MB4_short <span class="ot">&lt;-</span> MB4_short <span class="sc">%&gt;%</span></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(FINAL_MB4_COLUMNS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -845,7 +920,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <h1>IV. Merging Data into one Dataframe</h1>
 <p>Before merging, we must ensure strict type consistency. Some datasets might store <code>education</code> or <code>second_session</code> as numbers or Booleans, while others store them as text. To prevent merge errors, we explicitly force these problematic columns to the <code>character</code> (text) data type across all three datasets before binding them together.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define columns with potential type mismatches</span></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define columns with potential type mismatches</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Added "second_session" to the list</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>cols_to_fix <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"parent1_education"</span>, </span>
@@ -861,7 +936,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>MB4_short <span class="ot">&lt;-</span> MB4_short <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">any_of</span>(cols_to_fix), as.character))</span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># NOW we can merge safely</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>manybabies_merged <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(MB1_short, MB3_short, MB4_short)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>manybabies_merged <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(MB1_short, MB3_short, MB4_short)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="v.-cleaning-empty-values" class="level1">
@@ -872,24 +947,33 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <li><p>We scan for empty strings (<code>""</code>) or strings containing only whitespace (<code>" "</code>) and convert them to true R <code>NA</code> values. This ensures accurate missing data analysis.</p></li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>manybabies_merged <span class="ot">&lt;-</span> manybabies_merged <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>manybabies_merged <span class="ot">&lt;-</span> manybabies_merged <span class="sc">%&gt;%</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Convert categorical factors (like age_group_new) to plain text characters</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.factor), as.character)) <span class="sc">%&gt;%</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Handle whitespace: logical check for empty strings</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If a character column contains only spaces or is empty, make it a real NA</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">na_if</span>(<span class="fu">str_trim</span>(.), <span class="st">""</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">na_if</span>(<span class="fu">str_trim</span>(.), <span class="st">""</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="vi.-export" class="level1">
 <h1>VI. Export</h1>
 <p>Finally, we save the merged dataset. We specify <code>na = "NA"</code> to explicitly write the string “NA” into empty cells in the CSV.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We use the 'na = "NA"' argument to ensure the CSV looks exactly </span></span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We use the 'na = "NA"' argument to ensure the CSV looks exactly </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># like the Python output (with "NA" written in empty cells), </span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># but your R dataframe stays clean and numeric!</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(manybabies_merged, <span class="st">"manybabies_merged_final.csv"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(manybabies_merged, <span class="st">"manybabies_merged.csv"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="vii.-validation" class="level1">
+<h1>VII. Validation</h1>
+<p>From each original dataset, 10 participants were randomly selected. For each selected participant, we checked whether they also appeared in the new manybabies_merged.csv dataset. If a participant was missing, we examined the source dataset to determine the reason and whether the exclusion was justified.</p>
+<p>In <strong>MB1</strong>, all 10 sampled participants were present in the merged dataset.</p>
+<p>In <strong>MB3</strong>, 3 of the 10 sampled participants were missing. These exclusions were due to:<br>
+– fussiness (trial error), – equipment malfunction (session error), and – caregiver interference (trial error).</p>
+<p>In <strong>MB4</strong>, 3 of the 10 sampled participants were also missing. The reasons were: – failure to view the critical period in two cases (session error), and – outside interference in one case (session error).</p>
+<p>The validation dataset <em>manybabies_validation.xlsx</em> is attached.</p>
 </section>
 
 </main>
@@ -945,14 +1029,13 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
