@@ -15,7 +15,7 @@ format:
 
 **Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com
 
-**Project aims**: Finding communalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.
+**Project aims**: Finding commonalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.
 
 **Project objectives**: Combining and standardizing MB1, MB3, MB4 datasets into one for easier further exploration Producing clear process and data documentation
 
