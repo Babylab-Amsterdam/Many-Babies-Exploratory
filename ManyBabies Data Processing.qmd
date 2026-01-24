@@ -11,9 +11,9 @@ format:
 
 **Project start date**: 2025-09-19 Project end date: 2025-12-
 
-**Contributors**: David Osten, Saulė Remeikaitė
+**Contributors**: David Osten, Saulė Remeikaitė, Hanna Nagy
 
-**Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com
+**Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com, hannagy2000\@gmail.com
 
 **Project aims**: Finding commonalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.
 
@@ -151,9 +151,9 @@ We load the raw datasets for MB1, MB3, and MB4. These files are located in the `
 
 ```{r}
 library(readr)
-MB1 <- read_csv("Original Data Files/MB1_02_validated_output.csv")
-MB3 <- read_csv("Original Data Files/MB3_02_validated_merged_output.csv")
-MB4 <- read_csv("Original Data Files/MB4_clean_data.csv")
+MB1 <- read_csv("MB1_02_validated_output.csv") #"Original Data Files/
+MB3 <- read_csv("MB3_02_validated_merged_output.csv")
+MB4 <- read_csv("MB4_clean_data.csv")
 ```
 
 # I. Basic Preparation of Each Dataframe
@@ -374,7 +374,7 @@ This is the most complex step. We transform each filtered dataframe (`_excluded`
 
 ### Harmonization Step 1: Define Master Column List
 
-We define a `CORE_COLUMNS` list representing the final variables we want to keep. We also define `FINAL_MB4_COLUMNS` to include MB4-specific backup looking time variables.
+We define a `CORE_COLUMNS` list representing the final variables we want to keep. We also define `FINAL_MB4_COLUMNS` to include MB4-specific original looking time variables.
 
 ```{r}
 # A. CORE columns that MUST be in all three dataframes
@@ -404,14 +404,13 @@ CORE_COLUMNS <- c(
   "second_session"
 )
 
-# B. MB4-Specific columns (Backup Looking Times)
-MB4_BACKUP_COLUMNS <- c(
-  "lookingtime_videoevent_backup",
-  "lookingtime_freezeframe_backup"
+# B. MB4-Specific column (Freezeframe Looking Times)
+MB4_ORIGINAL_COLUMNS <- c(
+  "lookingtime_freezeframe"
 )
 
 # The full column set for MB4_short
-FINAL_MB4_COLUMNS <- c(CORE_COLUMNS, MB4_BACKUP_COLUMNS)
+FINAL_MB4_COLUMNS <- c(CORE_COLUMNS, MB4_ORIGINAL_COLUMNS)
 ```
 
 ### Harmonization Step 2: Define Age Bins and Labels globally
@@ -600,7 +599,7 @@ The harmonization of MB4 involved transforming the `MB4_long_excluded` dataset i
 
 A unique step for this dataset was the preservation of specific looking time metrics. In contrast to MB1 and MB3, MB4 had two looking time variables: `lookingtime_videoevent` (looking time while the video was played) and `lookingtime_freezeframe` (looking time after the video ended, with the last frame remaining frozen on the screen).
 
-We renamed the original variables to serve as 'backup' columns (`lookingtime_videoevent_backup` and `lookingtime_freezeframe_backup`) and established the primary `looking_time` variable using `lookingtime_videoevent`.
+We established the primary `looking_time` variable using the original `lookingtime_videoevent` and then removed the original variable. We kept the MB4 specific `lookingtime_freezeframe` variable.
 
 For `age_group_new`, we applied the same extended age binning logic used in the previous steps.
 
@@ -618,13 +617,10 @@ MB4_short <- MB4_long_excluded %>%
     trial_type = condition,
     primary_language_exposure = percent_primarylanguage,
     
-    # Rename original metric columns to be the backup columns
-    lookingtime_videoevent_backup = lookingtime_videoevent,
-    lookingtime_freezeframe_backup = lookingtime_freezeframe
   ) %>%
   mutate(
-    # Create looking_time from the backup
-    looking_time = lookingtime_videoevent_backup,
+    # Create looking_time from the original looking time variable
+    looking_time = lookingtime_videoevent,
     
     # Static values
     stimulus_type = "audiovisual",
@@ -682,7 +678,10 @@ MB4_short <- MB4_long_excluded %>%
       "bilingual", 
       "monolingual"
     )
-  )
+  )%>%
+  
+  # Remove original looking time variable
+  select(-lookingtime_videoevent)
 
 # --- 2. Add Missing Columns (using FINAL_MB4_COLUMNS list) ---
 # Identify which columns from the target list are missing
