@@ -11,13 +11,13 @@ format:
 
 **Project start date**: 2025-09-19 Project end date: 2025-12-
 
-**Contributors**: David Osten, Saulė Remeikaitė, Hanna Nagy
+**Contributors**: David Osten, Saulė Remeikaitė, Hanna Nagy, Arya Mallik
 
-**Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com, hannagy2000\@gmail.com
+**Contact mails**: david.leon.osten\@gmail.com, saule.remeikaite\@gmail.com, hannagy2000\@gmail.com, aryamallik66\@gmail.com
 
 **Project aims**: Finding commonalities between multiple ManyBabies studies. Infant looking time (LT) as the main variable of interest across MB projects. Focus on habituation that happens during LT in experimental / training trials.
 
-**Project objectives**: Combining and standardizing MB1, MB3, MB4 datasets into one for easier further exploration Producing clear process and data documentation
+**Project objectives**: Combining and standardizing MB1, MB3, MB4 datasets into one for easier further exploration. Producing clear process and data documentation
 
 **Studies:**\
 MB1 https://manybabies.org/MB1/\
@@ -760,3 +760,13 @@ In **MB3**, 3 of the 10 sampled participants were missing. These exclusions were
 In **MB4**, 3 of the 10 sampled participants were also missing. The reasons were: – failure to view the critical period in two cases (session error), and – outside interference in one case (session error).
 
 The validation dataset *manybabies_validation.xlsx* is attached.
+
+# VIII. Outlier removal
+
+After plotting our data, we noticed four values with abnormally large looking times that were likely errors in documenting. These datapoints were for MB4_babylabmpib_mb4_02 (41852), MB4_babylabmpib_mb4_15 (41518),  MB3_UPFbabylab_MB3_59637 (751), and MB3_UPFbabylab_MB3_59649 (472). To avoid skewing the results, these datapoints were removed. 
+
+```{r}
+merged_manybabies_final <- merged_manybabies %>%       
+  filter(!looking_time %in% c(41852, 41518, 751, 472))
+```
+This new dataset was exported as a new cvs file called merged_manybabies_final. 
