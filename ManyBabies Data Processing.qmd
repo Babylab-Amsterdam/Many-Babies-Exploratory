@@ -45,9 +45,10 @@ b. **Unique subject identifier.** This also does not exist in the original files
 c. **Habituation**. This true/false variable can be easily created based on the type of trial. Familairization and training trials will have Habituation=false, while experimental conditions have Habituation=true.
 
 Other variables do not exist in all datasets in the same form but can be derived from variables that are already available:\
-a. **Household size.** MB1 contains `household_size`, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: `num_adults_household` and `num_children_household`.\
-b. **Age group.** MB1 includes `age_group`, but this variable is missing in MB3 and MB4. In these datasets, age group can be derived from the available age-in-days variables (MB3: `participant_age_days`, MB4: `age_days`).\
-c. **Language group.** MB1 contains `language_group` (monolingual vs. bilingual), but the other datasets do not. In MB3 and MB4, the variable can be created using primary language exposure (MB3: `lang1_exposure`, MB4: `percent_primarylanguage`).
+a. **Stimulus identifier**. MB1 contains `stimulus_num` , MB2 contains `stimulus_filename` , while MB4 does not contain one specific variable indicating the specific stimulus for each trial. For MB4, the variable can be created by merging the content of the variables `push_up_identity`, `push_up_order`, `push_up_side`.\
+b. **Household size.** MB1 contains `household_size`, while MB3 and MB4 do not. In MB3, the variable can be reconstructed from two variables that do exist: `num_adults_household` and `num_children_household`.\
+c. **Age group.** MB1 includes `age_group`, but this variable is missing in MB3 and MB4. In these datasets, age group can be derived from the available age-in-days variables (MB3: `participant_age_days`, MB4: `age_days`).\
+d. **Language group.** MB1 contains `language_group` (monolingual vs. bilingual), but the other datasets do not. In MB3 and MB4, the variable can be created using primary language exposure (MB3: `lang1_exposure`, MB4: `percent_primarylanguage`).
 
 The table below lists all variables that we will use moving forward, whether they are present in all datasets, judged relevant for analysis, can be created from existing information, or are currently absent but expected to be added later. The leftmost column shows the standardized variable name that we will apply across all datasets to ensure consistency.
 
@@ -82,6 +83,10 @@ The table below lists all variables that we will use moving forward, whether the
 +------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
 | **Trial Type:\                     | trial_type                                                                                  | trial_type                                                                                  | condition                                                                                   |
 | trial_type**                       |                                                                                             |                                                                                             |                                                                                             |
++------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
+| **Stimulus Identifier:\            | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
+| stimulus_id**                      |                                                                                             |                                                                                             |                                                                                             |
+|                                    | project_id + trial_type + stimulus_num                                                      | project_id + trial_type + stimulus_filename                                                 | push_up_identity + push_up_order + push_up_side                                             |
 +------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------+
 | **Habituation:\                    | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      | *\[variable doesn't exist but can easily be created\]*                                      |
 | habituation**                      |                                                                                             |                                                                                             |                                                                                             |
@@ -389,6 +394,7 @@ CORE_COLUMNS <- c(
   "stimulus_type",
   "trial_type",
   "trial_number",
+  "stimulus_id",
   "habituation",
   "looking_time",
   "household_size",
@@ -440,6 +446,7 @@ MB1_short <- MB1_excluded %>%
   # --- 1. Rename existing columns ---
   rename(
     lab_id = lab,
+    stimulus_id = stimulus_num,
     participant_sex = gender,
     parent1_education = parenta_education,
     parent2_education = parentb_education,
@@ -455,6 +462,9 @@ MB1_short <- MB1_excluded %>%
   mutate(
     # Create static columns
     stimulus_type = "audiovisual",
+    
+     # Harmonize stimulus identifier
+    stimulus_id = as.character(paste(project_id, trial_type, stimulus_id, sep = "_")),
     
     # --- Habituation Logic for MB1 ---
     habituation = if_else(trial_type %in% c("IDS", "ADS"), TRUE, FALSE),
@@ -510,6 +520,7 @@ MB3_short <- MB3_excluded %>%
   rename(
     age_days = participant_age_days,
     looking_time = looking_time_seconds,
+    stimulus_id = stimulus_filename,
     parent1_education = caregiver1_education_construct_response,
     parent2_education = caregiver2_education_construct_response,
     primarycaregiver_gender = caregiver1_gender,
@@ -520,6 +531,9 @@ MB3_short <- MB3_excluded %>%
   ) %>%
   mutate(
     stimulus_type = "audiovisual",
+    
+    # Harmonize stimulus identifier
+    stimulus_id = as.character(paste(project_id, trial_type, stimulus_id, sep = "_")),
     
     # --- Habituation Logic for MB3 ---
     habituation = if_else(trial_type %in% c("consistent", "inconsistent"), TRUE, FALSE),
@@ -609,6 +623,8 @@ Standardization of variable values involved mapping text values to our master sc
 
 The variable `habituation` is filled with true or false based on `trial_type`. If `trial_type` is social, nonsocial, `habituation` = True. If not, false.
 
+The variable `stimulus_id` is created by merging the variables `push_up_identity`, `push_up_order`, and `push_up_side` from the original MB4 dataset.
+
 ```{r}
 # --- 1. Rename and Mutate ---
 MB4_short <- MB4_long_excluded %>%
@@ -625,6 +641,17 @@ MB4_short <- MB4_long_excluded %>%
     # Static values
     stimulus_type = "audiovisual",
     
+    # Create and harmonize stimulus identifier
+    stimulus_id = as.character(
+      paste(
+        project_id,
+        trial_type,
+        push_up_identity,
+        push_up_order,
+        push_up_side,
+        sep = "_"
+      )),
+      
     # --- Habituation Logic for MB4 ---
     habituation = if_else(trial_type %in% c("social", "nonsocial"), TRUE, FALSE),
     
@@ -737,18 +764,7 @@ manybabies_merged <- manybabies_merged %>%
   mutate(across(where(is.character), ~ na_if(str_trim(.), "")))
 ```
 
-# VI. Export
-
-Finally, we save the merged dataset. We specify `na = "NA"` to explicitly write the string "NA" into empty cells in the CSV.
-
-```{r}
-# We use the 'na = "NA"' argument to ensure the CSV looks exactly 
-# like the Python output (with "NA" written in empty cells), 
-# but your R dataframe stays clean and numeric!
-write_csv(manybabies_merged, "manybabies_merged.csv", na = "NA")
-```
-
-# VII. Validation
+# VI. Validation
 
 From each original dataset, 10 participants were randomly selected. For each selected participant, we checked whether they also appeared in the new manybabies_merged.csv dataset. If a participant was missing, we examined the source dataset to determine the reason and whether the exclusion was justified.
 
@@ -761,12 +777,27 @@ In **MB4**, 3 of the 10 sampled participants were also missing. The reasons were
 
 The validation dataset *manybabies_validation.xlsx* is attached.
 
-# VIII. Outlier removal
+# VII. Outlier removal
 
-After plotting our data, we noticed four values with abnormally large looking times that were likely errors in documenting. These datapoints were for MB4_babylabmpib_mb4_02 (41852), MB4_babylabmpib_mb4_15 (41518),  MB3_UPFbabylab_MB3_59637 (751), and MB3_UPFbabylab_MB3_59649 (472). To avoid skewing the results, these datapoints were removed. 
+After plotting our data, we noticed four values with abnormally large looking times that were likely errors in documenting. These datapoints were for MB4_babylabmpib_mb4_02 (41852), MB4_babylabmpib_mb4_15 (41518), MB3_UPFbabylab_MB3_59637 (751), and MB3_UPFbabylab_MB3_59649 (472). To avoid skewing the results, these datapoints were removed.
 
 ```{r}
-merged_manybabies_final <- merged_manybabies %>%       
+final_merged_manybabies <- manybabies_merged %>%       
   filter(!looking_time %in% c(41852, 41518, 751, 472))
 ```
-This new dataset was exported as a new cvs file called merged_manybabies_final. 
+
+# VIII. Export
+
+Finally, we save the merged dataset. We specify `na = "NA"` to explicitly write the string "NA" into empty cells in the CSV.
+
+```{r}
+# We use the 'na = "NA"' argument to ensure the CSV looks exactly 
+# like the Python output (with "NA" written in empty cells), 
+# but your R dataframe stays clean and numeric!
+write_csv(final_merged_manybabies, "final_merged_manybabies.csv", na = "NA")
+
+getwd()
+file.path(getwd(), "final_merged_manybabies.csv")
+```
+
+# 
