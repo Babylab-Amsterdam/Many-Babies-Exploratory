@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#iv.-merging-data-into-one-dataframe" id="toc-iv.-merging-data-into-one-dataframe" class="nav-link" data-scroll-target="#iv.-merging-data-into-one-dataframe">IV. Merging Data into one Dataframe</a></li>
   <li><a href="#v.-cleaning-empty-values" id="toc-v.-cleaning-empty-values" class="nav-link" data-scroll-target="#v.-cleaning-empty-values">V. Cleaning Empty Values</a></li>
   <li><a href="#vi.-validation" id="toc-vi.-validation" class="nav-link" data-scroll-target="#vi.-validation">VI. Validation</a></li>
-  <li><a href="#vii.-outlier-removal" id="toc-vii.-outlier-removal" class="nav-link" data-scroll-target="#vii.-outlier-removal">VII. Outlier removal</a></li>
+  <li><a href="#vii.-outlier-removal" id="toc-vii.-outlier-removal" class="nav-link" data-scroll-target="#vii.-outlier-removal">VII. Outlier Removal</a></li>
   <li><a href="#viii.-export" id="toc-viii.-export" class="nav-link" data-scroll-target="#viii.-export">VIII. Export</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
@@ -1002,7 +1002,7 @@ dbl (50): subj_num, age_days, premature_days, screen_size_inches, infant_dis...
 <p>The validation dataset <em>manybabies_validation.xlsx</em> is attached.</p>
 </section>
 <section id="vii.-outlier-removal" class="level1">
-<h1>VII. Outlier removal</h1>
+<h1>VII. Outlier Removal</h1>
 <p>After plotting our data, we noticed four values with abnormally large looking times that were likely errors in documenting. These datapoints were for MB4_babylabmpib_mb4_02 (41852), MB4_babylabmpib_mb4_15 (41518), MB3_UPFbabylab_MB3_59637 (751), and MB3_UPFbabylab_MB3_59649 (472). To avoid skewing the results, these datapoints were removed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>final_merged_manybabies <span class="ot">&lt;-</span> manybabies_merged <span class="sc">%&gt;%</span>       </span>
