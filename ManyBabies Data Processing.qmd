@@ -140,7 +140,9 @@ For this, we follow a systematic pipeline:\
 **III. Harmonization**: Renaming variables to a master standard, calculating derived variables (e.g. household size and language group), and ensuring all datasets share the exact same column structure. And lastly, standardizing the values that variables can take across all three datasets.\
 **IV. Merging**: Combining the harmonized datasets into one master file.\
 **V. Cleaning Empty Values**\
-**VI. Export**
+**VI. Validation\
+VII. Outlier Removal\
+VIII. Export**
 
 # Loading tidyverse
 
